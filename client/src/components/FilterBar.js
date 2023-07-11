@@ -12,7 +12,6 @@ import {
 const FilterBar = () => {
     const handleFilterClick = (filter) => {
         console.log(`Фильтрация по: ${filter}`);
-        // Здесь добавьте вашу логику фильтрации
     };
 
     return (

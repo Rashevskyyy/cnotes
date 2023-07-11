@@ -6,9 +6,8 @@ const noteSchema = new mongoose.Schema({
     description: String,
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // Ссылка на модель пользователя
+        ref: "User",
     },
-    userName: String,
     firstName: String,
     lastName: String,
     isPublished: {
@@ -19,7 +18,7 @@ const noteSchema = new mongoose.Schema({
         type: Date,
         default: () => {
             const now = new Date();
-            now.setUTCHours(now.getUTCHours() + 3); // Добавляем смещение +3 часа к текущему UTC времени
+            now.setUTCHours(now.getUTCHours() + 3);
             return now;
         },
     },

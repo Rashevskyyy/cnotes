@@ -23,7 +23,7 @@ async function loginUser(req, res) {
       firstName: user.firstName,
       lastName: user.lastName,
     }, "creative-notes-key", {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     return res.json({

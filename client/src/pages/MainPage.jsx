@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import Header from "../components/Header";
-import CardList from "../components/CardList";
+import NotesList from "../components/NotesList";
 import FilterBar from "../components/FilterBar";
 
 const FlexContainer = styled("div")({
@@ -17,7 +17,7 @@ const MainPage = () => {
     <FlexContainer>
       <Header />
       <FilterBar />
-      <CardList />
+      <NotesList />
     </FlexContainer>
   );
 };

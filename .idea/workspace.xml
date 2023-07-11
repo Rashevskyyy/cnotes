@@ -4,7 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ea8b1b2-11a6-4936-864a-3bedf2ae3675" name="Changes" comment="" />
+    <list default="true" id="8ea8b1b2-11a6-4936-864a-3bedf2ae3675" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/pages/NoteDetailPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/api/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Card.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/CardList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/FilterBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/FilterBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/NavigationLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NavigationLinks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/MainPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Settings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/index.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/slices/userSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/slices/userSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/loginController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/loginController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/controllers/noteController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/noteController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/models/noteModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/noteModel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/routes/noteRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/noteRoutes.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,27 +44,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
-    "javascript.nodejs.core.library.configured.version": "16.14.2",
-    "javascript.nodejs.core.library.typings.version": "16.18.38",
-    "last_opened_file_path": "C:/Users/User/Desktop/creative-notes",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\User\\Desktop\\creative-notes\\server\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2021.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.14.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.18.38&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/creative-notes&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\User\\Desktop\\creative-notes\\server\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\WebStorm 2021.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactBuddySettings">
     <option name="extensionsIgnore" value="true" />
   </component>
@@ -61,6 +82,7 @@
       <recent name="C:\Users\User\Desktop\creative-notes\server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\Desktop\creative-notes\client\src\pages" />
       <recent name="C:\Users\User\Desktop\creative-notes\client\src" />
     </key>
   </component>

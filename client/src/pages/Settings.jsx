@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Avatar, Box, Button, Container, TextField} from '@mui/material';
 import {styled} from '@mui/system';
 import {useMutation} from 'react-query';
-import {updateUserAvatar, updateUserInfo, uploadAvatar} from '../api/routes';
+import {updateUserInfo} from '../api/routes';
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUserInfoState} from '../store/slices/userSlice';
 
@@ -35,15 +35,13 @@ const Settings = () => {
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.user)
-    console.log('user', user)
-    // функция для загрузки нового аватара
+
     const handleAvatarChange = async (e) => {
         if (e.target.files[0]) {
             const formData = new FormData();
             formData.append("avatar", e.target.files[0]);
 
             try {
-                const response = await uploadAvatar(formData);
                 setNewAvatar(URL.createObjectURL(e.target.files[0]));
                 handleAvatarChange.mutate(formData);
             } catch (error) {
@@ -55,7 +53,6 @@ const Settings = () => {
     const handleSaveAvatar = async () => {
         if (newAvatar) {
             try {
-                // await updateUserAvatar(userId, newAvatar); // замените `userId` на идентификатор пользователя
                 setAvatar(newAvatar);
             } catch (error) {
                 console.error("Ошибка при сохранении аватара", error);
@@ -63,9 +60,7 @@ const Settings = () => {
         }
     };
 
-    // функция для изменения пароля
     const handlePasswordChange = () => {
-        // здесь вы можете добавить логику для проверки текущего пароля и изменения пароля
         console.log("Current password:", currentPassword);
         console.log("New password:", newPassword);
     };

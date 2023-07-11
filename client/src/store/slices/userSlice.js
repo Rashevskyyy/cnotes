@@ -21,7 +21,7 @@ export const userSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       Cookies.remove("token");
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     },
     register: (state, action) => {
       state.user = action.payload;

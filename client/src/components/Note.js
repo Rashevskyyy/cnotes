@@ -9,22 +9,33 @@ import {
     Divider,
     Box,
     Grid,
+    Menu,
+    MenuItem,
 } from '@mui/material';
 import { MoreVert as MoreVertIcon } from '@mui/icons-material';
+import {useMutation} from 'react-query';
+import {deleteNoteApi, fetchNotesByUser} from '../api/routes';
+import {useDispatch} from 'react-redux';
+import {toast} from 'react-toastify';
+import {useNavigate} from 'react-router-dom';
 
 const ellipsisStyle = {
-    height: '3em', // высота равна трем строкам текста
+    height: '3em',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: 2, // ограничить количество строк до 2
+    WebkitLineClamp: 2,
 };
 
-const CardComponent = ({ tag, title, description, userName, date }) => {
+const Note = ({ tag, title, description, firstName, date, id }) => {
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const getTagColor = (tag) => {
         switch (tag) {
-            case 'Managment':
+            case 'Management':
                 return '#f44336';
             case 'Development':
                 return '#2196f3';
@@ -37,15 +48,40 @@ const CardComponent = ({ tag, title, description, userName, date }) => {
 
     const tagColor = getTagColor(tag);
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const { mutate: handleDelete } = useMutation(() => deleteNoteApi(id),{
+        onSuccess: () => {
+            handleClose()
+            dispatch(fetchNotesByUser());
+            toast("Заметка удалена")
+        },
+        onError: (error) => {
+            console.log("e", error);
+        },
+    });
+
+    const handleCardClick = () => {
+        navigate(`/notes/${id}`);
+    };
+
     return (
         <Card sx={{borderRadius: '8px'}}>
             <CardHeader
                 avatar={<div style={{ backgroundColor: 'red', borderRadius: '50%' }} />}
                 title={
                     <Typography
+                        onClick={handleCardClick}
                         variant="subtitle1"
                         component="span"
                         style={{
+                            cursor: 'pointer',
                             display: 'inline-flex',
                             alignItems: 'center',
                             color: tagColor,
@@ -67,7 +103,10 @@ const CardComponent = ({ tag, title, description, userName, date }) => {
                 }
                 style={{ paddingBottom: 0, paddingTop: 16, paddingLeft: 0 }}
             />
-            <CardContent>
+            <CardContent
+                style={{cursor: 'pointer'}}
+                onClick={handleCardClick}
+            >
                 <Typography variant="h5" component="div" style={{paddingBottom: 8}}>
                     {title}
                 </Typography>
@@ -85,7 +124,7 @@ const CardComponent = ({ tag, title, description, userName, date }) => {
                             </Grid>
                             <Grid item>
                                 <Typography variant="body2">
-                                    {userName}
+                                    {firstName}
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -96,9 +135,16 @@ const CardComponent = ({ tag, title, description, userName, date }) => {
                         </Grid>
                     </Grid>
                     <Grid item>
-                        <IconButton>
+                        <IconButton onClick={handleClick}>
                             <MoreVertIcon />
                         </IconButton>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={handleDelete}>Удалить</MenuItem>
+                        </Menu>
                     </Grid>
                 </Grid>
             </Box>
@@ -106,4 +152,4 @@ const CardComponent = ({ tag, title, description, userName, date }) => {
     );
 };
 
-export default CardComponent;
+export default Note;

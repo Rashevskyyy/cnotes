@@ -37,7 +37,7 @@ const Profile = () => {
     const navigate = useNavigate();
     const [profileOpen, setProfileOpen] = useState(false);
     const user = useSelector((state) => state.user);
-    console.log('user', user)
+
     const handleProfileClick = () => {
         setProfileOpen(!profileOpen);
     };

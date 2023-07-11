@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { LoginPage, RegisterPage, MainPage } from "./pages/index";
+import { LoginPage, RegisterPage, MainPage, NoteDetailPage } from "./pages/index";
 import PrivateRoutes from "./components/PrivateRoutes";
 import Cookies from "js-cookie";
 import { darkTheme, lightTheme } from "./themes";
@@ -27,6 +27,7 @@ const App = () => {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path="/notes" element={<MainPage />} />
+            <Route path="/notes/:id" element={<NoteDetailPage />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
 
