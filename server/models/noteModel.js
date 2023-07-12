@@ -18,7 +18,7 @@ const noteSchema = new mongoose.Schema({
         type: Date,
         default: () => {
             const now = new Date();
-            now.setUTCHours(now.getUTCHours() + 3);
+            now.setUTCHours(now.getUTCHours());
             return now;
         },
     },

@@ -49,6 +49,11 @@ export const fetchNotesByUser = createAsyncThunk('notes/fetchNotes', async () =>
   return response.data;
 });
 
+export const fetchAllNotes = createAsyncThunk('notes/fetchAllNotes', async () => {
+  const response = await api.get('/notes/all');
+  return response.data;
+});
+
 export const getNote = createAsyncThunk('notes/getNote', async (noteId) => {
   const response = await api.get(`/note/${noteId}`);
   return response.data;

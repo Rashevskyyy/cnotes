@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchNotesByUser, getNote} from '../../api/routes';
+import {fetchAllNotes, fetchNotesByUser, getNote} from '../../api/routes';
 
 export const notesSlice = createSlice({
     name: "notes",
@@ -15,7 +15,15 @@ export const notesSlice = createSlice({
                 state.notesByUser = action.payload.map((note) => {
                     return {
                         ...note,
-                        date: new Date(note.date).toLocaleDateString() + ' ' + new Date(note.date).toLocaleTimeString()
+                        date: new Date(note.date).toLocaleDateString()
+                    }
+                });
+            })
+            .addCase(fetchAllNotes.fulfilled, (state, action) => {
+                state.notes = action.payload.map((note) => {
+                    return {
+                        ...note,
+                        date: new Date(note.date).toLocaleDateString()
                     }
                 });
             })
@@ -26,7 +34,7 @@ export const notesSlice = createSlice({
                 state.isLoadingCurrentNote = false
                 state.currentNote = {
                         ...action.payload,
-                        date: new Date(action.payload.date).toLocaleDateString() + ' ' + new Date(action.payload.date).toLocaleTimeString()
+                        date: new Date(action.payload.date).toLocaleDateString()
                     }
             })
 

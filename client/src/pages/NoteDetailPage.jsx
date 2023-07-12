@@ -1,15 +1,13 @@
 import React, {useEffect} from 'react';
 import {
-    Divider,
     Box,
-    Grid,
-    Typography,
-    Paper, Button, CircularProgress
+     CircularProgress
 } from '@mui/material';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {getNote} from '../api/routes';
 import {useNavigate, useParams} from 'react-router-dom';
+import NoteDetail from '../components/NoteDetail';
 
 const NoteDetailPage = () => {
     const {id} = useParams()
@@ -22,9 +20,9 @@ const NoteDetailPage = () => {
 
     const selectedNote = useSelector((state) => state.notes.currentNote);
     const isLoadingCurrentNote = useSelector((state) => state.notes.isLoadingCurrentNote);
-    console.log('selectedNote', selectedNote)
+
     const handleBack = () => {
-        navigate('/notes')
+        navigate(-1)
     }
 
     if (isLoadingCurrentNote) {
@@ -36,47 +34,10 @@ const NoteDetailPage = () => {
     }
 
     return (
-        <>
-            <Box p={2}>
-                <Button variant="contained" onClick={handleBack} sx={{ padding: '1rem', marginBottom: 2, backgroundColor: '#334150' }}>
-                    Назад
-                </Button>
-                <Paper elevation={3} sx={{ padding: '1rem' }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Typography variant="h5" component="div">
-                                {selectedNote.title}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="body1">
-                                <strong>Tag:</strong> {selectedNote.tag}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="body1">
-                                <strong>Description:</strong> {selectedNote.description}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="body1">
-                                <strong>First Name:</strong> {selectedNote.firstName}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="body1">
-                                <strong>Last Name:</strong> {selectedNote.lastName}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="body1">
-                                <strong>Date:</strong> {selectedNote.date}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                </Paper>
-            </Box>
-        </>
+            <NoteDetail
+                selectedNote={selectedNote}
+                handleBack={handleBack}
+            />
     );
 };
 

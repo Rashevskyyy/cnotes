@@ -29,6 +29,7 @@ const App = () => {
             <Route path="/notes" element={<MainPage />} />
             <Route path="/notes/:id" element={<NoteDetailPage />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/publish" element={<MainPage />} />
           </Route>
 
           <Route path="/" element={<LoginPage />} />

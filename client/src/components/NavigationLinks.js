@@ -19,12 +19,6 @@ const NavigationLinks = () => {
                 </ListItemIcon>
                 <WhiteText primary="Publish" />
             </ListItem>
-            <ListItem component={Link} to="/private">
-                <ListItemIcon>
-                    <LockIcon sx={{ color: '#ffffff' }} />
-                </ListItemIcon>
-                <WhiteText primary="Private" />
-            </ListItem>
         </List>
     );
 };

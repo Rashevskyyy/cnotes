@@ -12,12 +12,13 @@ import {
     Menu,
     MenuItem,
 } from '@mui/material';
-import { MoreVert as MoreVertIcon } from '@mui/icons-material';
+import {MoreVert as MoreVertIcon} from '@mui/icons-material';
 import {useMutation} from 'react-query';
 import {deleteNoteApi, fetchNotesByUser} from '../api/routes';
 import {useDispatch} from 'react-redux';
 import {toast} from 'react-toastify';
 import {useNavigate} from 'react-router-dom';
+import {motion} from 'framer-motion';
 
 const ellipsisStyle = {
     height: '3em',
@@ -28,7 +29,7 @@ const ellipsisStyle = {
     WebkitLineClamp: 2,
 };
 
-const Note = ({ tag, title, description, firstName, date, id }) => {
+const Note = ({tag, title, description, firstName, date, id, href}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const Note = ({ tag, title, description, firstName, date, id }) => {
         setAnchorEl(null);
     };
 
-    const { mutate: handleDelete } = useMutation(() => deleteNoteApi(id),{
+    const {mutate: handleDelete} = useMutation(() => deleteNoteApi(id), {
         onSuccess: () => {
             handleClose()
             dispatch(fetchNotesByUser());
@@ -72,22 +73,26 @@ const Note = ({ tag, title, description, firstName, date, id }) => {
     };
 
     return (
-        <Card sx={{borderRadius: '8px'}}>
-            <CardHeader
-                avatar={<div style={{ backgroundColor: 'red', borderRadius: '50%' }} />}
-                title={
-                    <Typography
-                        onClick={handleCardClick}
-                        variant="subtitle1"
-                        component="span"
-                        style={{
-                            cursor: 'pointer',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            color: tagColor,
-                            fontWeight: 'bold'
-                        }}
-                    >
+        <motion.div
+            whileHover={{scale: 1.10}}
+        >
+
+            <Card sx={{borderRadius: '8px'}}>
+                <CardHeader
+                    avatar={<div style={{backgroundColor: 'red', borderRadius: '50%'}}/>}
+                    title={
+                        <Typography
+                            onClick={handleCardClick}
+                            variant="subtitle1"
+                            component="span"
+                            style={{
+                                cursor: 'pointer',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                color: tagColor,
+                                fontWeight: 'bold'
+                            }}
+                        >
                         <span
                             style={{
                                 display: 'inline-block',
@@ -98,57 +103,60 @@ const Note = ({ tag, title, description, firstName, date, id }) => {
                                 marginRight: '12px',
                             }}
                         ></span>
-                        {tag}
+                            {tag}
+                        </Typography>
+                    }
+                    style={{paddingBottom: 0, paddingTop: 16, paddingLeft: 0}}
+                />
+                <CardContent
+                    style={{cursor: 'pointer'}}
+                    onClick={handleCardClick}
+                >
+                    <Typography variant="h5" component="div" style={{paddingBottom: 8}}>
+                        {title}
                     </Typography>
-                }
-                style={{ paddingBottom: 0, paddingTop: 16, paddingLeft: 0 }}
-            />
-            <CardContent
-                style={{cursor: 'pointer'}}
-                onClick={handleCardClick}
-            >
-                <Typography variant="h5" component="div" style={{paddingBottom: 8}}>
-                    {title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" style={ellipsisStyle}>
-                    {description}
-                </Typography>
-            </CardContent>
-            <Divider sx={{ width: '85%', mx: 'auto' }} />
-            <Box p={2}>
-                <Grid container alignItems="center" justifyContent="space-between">
-                    <Grid item>
-                        <Grid container alignItems="center" spacing={2}>
-                            <Grid item>
-                                <Avatar />
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="body2">
-                                    {firstName}
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="caption">
-                                    {date}
-                                </Typography>
+                    <Typography variant="body2" color="text.secondary" style={ellipsisStyle}>
+                        {description}
+                    </Typography>
+                </CardContent>
+                <Divider sx={{width: '85%', mx: 'auto'}}/>
+                <Box p={2}>
+                    <Grid container alignItems="center" justifyContent="space-between">
+                        <Grid item>
+                            <Grid container alignItems="center" spacing={2}>
+                                <Grid item>
+                                    <Avatar/>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="body2">
+                                        {firstName}
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="caption">
+                                        {date}
+                                    </Typography>
+                                </Grid>
                             </Grid>
                         </Grid>
+                        {href === "/notes" && (
+                            <Grid item>
+                                <IconButton onClick={handleClick}>
+                                    <MoreVertIcon/>
+                                </IconButton>
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={handleDelete}>Удалить</MenuItem>
+                                </Menu>
+                            </Grid>
+                        )}
                     </Grid>
-                    <Grid item>
-                        <IconButton onClick={handleClick}>
-                            <MoreVertIcon />
-                        </IconButton>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={handleDelete}>Удалить</MenuItem>
-                        </Menu>
-                    </Grid>
-                </Grid>
-            </Box>
-        </Card>
+                </Box>
+            </Card>
+        </motion.div>
     );
 };
 
