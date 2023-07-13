@@ -18,7 +18,7 @@ import {deleteNoteApi, fetchNotesByUser} from '../api/routes';
 import {useDispatch} from 'react-redux';
 import {toast} from 'react-toastify';
 import {useNavigate} from 'react-router-dom';
-import {motion} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 
 const ellipsisStyle = {
     height: '3em',
@@ -29,10 +29,11 @@ const ellipsisStyle = {
     WebkitLineClamp: 2,
 };
 
-const Note = ({tag, title, description, firstName, date, id, href}) => {
+const Note = ({tag, title, description, firstName, date, id, href, index}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [selectedNote, setSelectedNote] = React.useState(null);
 
     const getTagColor = (tag) => {
         switch (tag) {
@@ -73,10 +74,17 @@ const Note = ({tag, title, description, firstName, date, id, href}) => {
     };
 
     return (
-        <motion.div
-            whileHover={{scale: 1.10}}
-        >
-
+        <AnimatePresence>
+            <motion.div
+                layout={true}
+                layoutId={`note-container-${id}`}
+                whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
+                whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ opacity: { duration: 0.3, delay: index * 0.1 }, y: { duration: 0.3, delay: index * 0.1 } }}
+            >
             <Card sx={{borderRadius: '8px'}}>
                 <CardHeader
                     avatar={<div style={{backgroundColor: 'red', borderRadius: '50%'}}/>}
@@ -157,6 +165,8 @@ const Note = ({tag, title, description, firstName, date, id, href}) => {
                 </Box>
             </Card>
         </motion.div>
+        </AnimatePresence>
+
     );
 };
 
