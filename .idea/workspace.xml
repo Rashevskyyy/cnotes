@@ -5,26 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ea8b1b2-11a6-4936-864a-3bedf2ae3675" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client/src/pages/NoteDetailPage.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/api/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/api/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Card.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/CardList.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/FilterBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/FilterBar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/NavigationLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/NavigationLinks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/MainPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/MainPage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Settings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Settings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/slices/userSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/slices/userSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/loginController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/loginController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/controllers/noteController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/controllers/noteController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/models/noteModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/models/noteModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/routes/noteRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/routes/noteRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
