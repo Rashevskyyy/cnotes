@@ -1,5 +1,5 @@
 import React from 'react';
-import {useForm} from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
     Dialog,
     DialogContent,
@@ -11,21 +11,21 @@ import {
     DialogActions,
     Button,
     FormControlLabel,
-    Checkbox, Grid
+    Checkbox,
+    Grid
 } from '@mui/material';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import 'react-toastify/dist/ReactToastify.css';
-import {toast} from 'react-toastify';
-import {motion} from 'framer-motion';
+import { toast } from 'react-toastify';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const DialogCreateNote = (props) => {
-    const {isOpen, setIsOpen, handleCreateNote} = props;
+    const { isOpen, setIsOpen, handleCreateNote } = props;
 
     const {
         register,
         handleSubmit,
-        formState: {errors, isValid},
+        formState: { errors, isValid },
         reset,
     } = useForm({
         defaultValues: {
@@ -39,7 +39,7 @@ const DialogCreateNote = (props) => {
     const onSubmit = (data) => {
         handleCreateNote(data);
         reset();
-        toast('Заметка создана')
+        toast('Заметка создана');
     };
 
     const handleClose = () => {
@@ -47,88 +47,89 @@ const DialogCreateNote = (props) => {
         reset();
     };
 
+    const dialogVariants = {
+        hidden: { opacity: 0, scale: 0, x: '50%', y: '50%', originX: '100%', originY: '100%' },
+        visible: { opacity: 1, scale: 1, x: '0%', y: '0%', originX: '50%', originY: '50%' },
+        exit: { opacity: 0, scale: 0, x: '50%', y: '50%', originX: '100%', originY: '100%' },
+    };
+
     return (
-        <Dialog
-            component={motion.div} // Wrap the Dialog with motion.div
-            initial={{ opacity: 0}} // Initial styles for animation
-            animate={{ opacity: 1}} // Animation styles
-            exit={{ opacity: 0 }} // Exit animation styles
-            transition={{ duration: 0.5 }}
-            open={isOpen}
-            onClose={handleClose}
-            fullWidth
-            maxWidth="md">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogContent
-                    component={motion.div} // Wrap the DialogContent with motion.div
-                    initial={{ y: -20, opacity: 0 }} // Initial styles for animation
-                    animate={{ y: 0, opacity: 1 }} // Animation styles
-                    exit={{ y: -20, opacity: 0 }} // Exit animation styles
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    key="modal"
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={dialogVariants}
                 >
-                    <Grid container spacing={2}>
-                        <Grid item md={10}>
-                            <TextField
-                                fullWidth
-                                label="Title"
-                                sx={{marginBottom: 2}}
-                                {...register('title', {required: true})}
-                            />
-                            {errors.title && <span>This field is required</span>}
-                        </Grid>
-
-                        <Grid item md={2}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        icon={<BookmarkBorderIcon/>}
-                                        checkedIcon={<BookmarkIcon/>}
-                                        {...register('isPublished')}
-                                    />
-                                }
-                                label="Publish"
-                            />
-                        </Grid>
-
-                        <Grid item md={12}>
-                            <FormControl fullWidth sx={{marginBottom: 2}} size="small">
-                                <InputLabel id="tag-label">Tag</InputLabel>
-                                <Select
-                                    defaultValue={""}
-                                    labelId="tag-label"
-                                    label="Tag"
-                                    {...register('tag', {required: true})}
-                                >
-                                    <MenuItem value="Management">Management</MenuItem>
-                                    <MenuItem value="Development">Development</MenuItem>
-                                    <MenuItem value="Design">Design</MenuItem>
-                                </Select>
-                                {errors.tag && <span>This field is required</span>}
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item md={12}>
-                            <TextField
-                                fullWidth
-                                label="Description"
-                                multiline
-                                minRows={5}
-                                sx={{marginBottom: 2}}
-                                {...register('description')}
-                            />
-                        </Grid>
-                    </Grid>
-                </DialogContent>
-                <DialogActions
-                    component={motion.div} // Wrap the DialogActions with motion.div
-                    initial={{ y: 20, opacity: 0 }} // Initial styles for animation
-                    animate={{ y: 0, opacity: 1 }} // Animation styles
-                    exit={{ y: 20, opacity: 0 }} // Exit animation styles
+                    <Dialog
+                        open={isOpen}
+                        onClose={handleClose}
+                        fullWidth
+                        maxWidth="md"
                     >
-                    <Button onClick={handleClose}>Закрыть</Button>
-                    <Button disabled={!isValid} type="submit">Добавить заметку</Button>
-                </DialogActions>
-            </form>
-        </Dialog>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <DialogContent>
+                                <Grid container spacing={2}>
+                                    <Grid item md={10}>
+                                        <TextField
+                                            fullWidth
+                                            label="Title"
+                                            sx={{ marginBottom: 2 }}
+                                            {...register('title', { required: true })}
+                                        />
+                                        {errors.title && <span>This field is required</span>}
+                                    </Grid>
+                                    <Grid item md={2}>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    icon={<BookmarkBorderIcon />}
+                                                    checkedIcon={<BookmarkIcon />}
+                                                    {...register('isPublished')}
+                                                />
+                                            }
+                                            label="Publish"
+                                        />
+                                    </Grid>
+                                    <Grid item md={12}>
+                                        <FormControl fullWidth sx={{ marginBottom: 2 }} size="small">
+                                            <InputLabel id="tag-label">Tag</InputLabel>
+                                            <Select
+                                                defaultValue={""}
+                                                labelId="tag-label"
+                                                label="Tag"
+                                                {...register('tag', { required: true })}
+                                            >
+                                                <MenuItem value="Management">Management</MenuItem>
+                                                <MenuItem value="Development">Development</MenuItem>
+                                                <MenuItem value="Design">Design</MenuItem>
+                                            </Select>
+                                            {errors.tag && <span>This field is required</span>}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item md={12}>
+                                        <TextField
+                                            fullWidth
+                                            label="Description"
+                                            multiline
+                                            minRows={5}
+                                            sx={{ marginBottom: 2 }}
+                                            {...register('description')}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose}>Закрыть</Button>
+                                <Button disabled={!isValid} type="submit">Добавить заметку</Button>
+                            </DialogActions>
+                        </form>
+                    </Dialog>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
 
