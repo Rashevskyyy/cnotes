@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 import Header from "../components/Header";
 import NotesList from "../components/NotesList";
 import FilterBar from "../components/FilterBar";
-import {useMatch, useMatches, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 const FlexContainer = styled("div")({
   display: "flex",

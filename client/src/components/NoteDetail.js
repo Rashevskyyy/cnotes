@@ -11,7 +11,6 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import {AnimatePresence, motion} from 'framer-motion';
 
 const NoteDetail = (props) => {
     const {
@@ -19,13 +18,6 @@ const NoteDetail = (props) => {
         handleBack
     } = props
     return (
-        <AnimatePresence>
-            <motion.div
-                initial={{opacity: 0, y: 20}}
-                animate={{opacity: 1, y: 0}}
-                exit={{opacity: 0, y: 20}}
-                transition={{duration: 0.3}}
-            >
                 <Box p={2}>
                     <Button variant="contained" onClick={handleBack}
                             sx={{padding: '1rem', marginBottom: 2, backgroundColor: '#334150'}}>
@@ -87,9 +79,6 @@ const NoteDetail = (props) => {
 
                     </Paper>
                 </Box>
-            </motion.div>
-        </AnimatePresence>
-
     );
 };
 

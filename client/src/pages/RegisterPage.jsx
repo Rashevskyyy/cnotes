@@ -4,7 +4,6 @@ import RegisterForm from "../components/RegisterForm";
 import { useMutation } from "react-query";
 import {useNavigate} from 'react-router-dom';
 import {registerApi} from '../api/routes';
-import Header from '../components/Header';
 
 const RegisterPage = ({toggleTheme}) => {
   const dispatch = useDispatch();

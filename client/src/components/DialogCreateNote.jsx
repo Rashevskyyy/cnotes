@@ -17,7 +17,6 @@ import {
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { toast } from 'react-toastify';
-import { AnimatePresence, motion } from 'framer-motion';
 
 const DialogCreateNote = (props) => {
     const { isOpen, setIsOpen, handleCreateNote } = props;
@@ -47,22 +46,9 @@ const DialogCreateNote = (props) => {
         reset();
     };
 
-    const dialogVariants = {
-        hidden: { opacity: 0, scale: 0, x: '50%', y: '50%', originX: '100%', originY: '100%' },
-        visible: { opacity: 1, scale: 1, x: '0%', y: '0%', originX: '50%', originY: '50%' },
-        exit: { opacity: 0, scale: 0, x: '50%', y: '50%', originX: '100%', originY: '100%' },
-    };
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    key="modal"
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    variants={dialogVariants}
-                >
+
                     <Dialog
                         open={isOpen}
                         onClose={handleClose}
@@ -127,9 +113,6 @@ const DialogCreateNote = (props) => {
                             </DialogActions>
                         </form>
                     </Dialog>
-                </motion.div>
-            )}
-        </AnimatePresence>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {
     Card,
     CardContent,
@@ -17,11 +17,7 @@ import {useMutation} from 'react-query';
 import {deleteNoteApi, fetchNotesByUser} from '../api/routes';
 import {useDispatch} from 'react-redux';
 import {toast} from 'react-toastify';
-import {useHref, useNavigate, useParams} from 'react-router-dom';
-import {AnimatePresence, motion, useMotionValue} from 'framer-motion';
-import {useInvertedBorderRadius} from '../utils/use-inverted-border-radius';
-import {useScrollConstraints} from '../utils/use-scroll-constraints';
-import {useWheelScroll} from '../utils/use-wheel-scroll';
+import {useNavigate} from 'react-router-dom';
 
 const ellipsisStyle = {
     height: '3em',
@@ -32,44 +28,10 @@ const ellipsisStyle = {
     WebkitLineClamp: 2,
 };
 
-const dismissDistance = 150;
-
 const Note = ({tag, title, description, firstName, date, idNote, href, index, isSelected}) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const y = useMotionValue(0);
-    const zIndex = useMotionValue(isSelected ? 2 : 0);
-
-    // Maintain the visual border radius when we perform the layoutTransition by inverting its scaleX/Y
-    const inverted = useInvertedBorderRadius(20);
-
-    // We'll use the opened card element to calculate the scroll constraints
-    const cardRef = useRef(null);
-    const constraints = useScrollConstraints(cardRef, isSelected);
-
-    function checkSwipeToDismiss() {
-        y.get() > dismissDistance && navigate("/");
-    }
-
-    function checkZIndex(latest) {
-        if (isSelected) {
-            zIndex.set(2);
-        } else if (!isSelected && latest.scaleX < 1.01) {
-            zIndex.set(0);
-        }
-    }
-
-    // When this card is selected, attach a wheel event listener
-    const containerRef = useRef(null);
-    useWheelScroll(
-        containerRef,
-        y,
-        constraints,
-        checkSwipeToDismiss,
-        isSelected
-    );
 
     const getTagColor = (tag) => {
         switch (tag) {
@@ -110,16 +72,6 @@ const Note = ({tag, title, description, firstName, date, idNote, href, index, is
     };
 
     return (
-        <AnimatePresence>
-            <motion.div
-                layout={true}
-                whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
-                whileTap={{ scale: 0.95, transition: { duration: 0.1 } }}
-                initial={{ opacity: 0, y: -20,  }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ opacity: { duration: 0.3, delay: index * 0.1 }, y: { duration: 0.3, delay: index * 0.1 } }}
-            >
             <Card sx={{borderRadius: '8px'}}>
                 <CardHeader
                     avatar={<div style={{backgroundColor: 'red', borderRadius: '50%'}}/>}
@@ -199,9 +151,6 @@ const Note = ({tag, title, description, firstName, date, idNote, href, index, is
                     </Grid>
                 </Box>
             </Card>
-        </motion.div>
-        </AnimatePresence>
-
     );
 };
 
