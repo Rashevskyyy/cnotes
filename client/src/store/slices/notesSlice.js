@@ -4,7 +4,6 @@ import { fetchAllNotes, fetchNotesByUser, getNote } from "../../api/routes";
 export const notesSlice = createSlice({
   name: "notes",
   initialState: {
-    notesByUser: [],
     notes: [],
     currentNote: {},
     isLoadingCurrentNote: false,
@@ -12,7 +11,7 @@ export const notesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchNotesByUser.fulfilled, (state, action) => {
-        state.notesByUser = action.payload.map((note) => {
+        state.notes = action.payload.map((note) => {
           return {
             ...note,
             date: new Date(note.date).toLocaleDateString(),

@@ -12,8 +12,7 @@ const NotesList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const href = useHref();
-  const notes = useSelector((state) => state.notes.notesByUser);
-  const allNotes = useSelector((state) => state.notes.notes);
+  const notes = useSelector((state) => state.notes.notes);
 
   useEffect(() => {
     if (href === "/notes") {
@@ -38,9 +37,8 @@ const NotesList = () => {
   return (
     <Container maxWidth={false} sx={{ marginTop: 8 }}>
       <Grid container spacing={3}>
-        {href === "/publish"
-          ? allNotes.map((note, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={2}>
+          {notes.map((note, index) => (
+              <Grid item xs={12} sm={6} md={4} lg={2} key={note._id}>
                 <Note
                   idNote={note._id}
                   tag={note.tag}
@@ -52,21 +50,7 @@ const NotesList = () => {
                   index={index}
                 />
               </Grid>
-            ))
-          : notes.map((note, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={2}>
-                <Note
-                  idNote={note._id}
-                  tag={note.tag}
-                  title={note.title}
-                  description={note.description}
-                  firstName={note.firstName}
-                  date={note.date}
-                  href={href}
-                  index={index}
-                />
-              </Grid>
-            ))}
+          ))}
       </Grid>
       <Fab
         onClick={() => setIsOpen(true)}

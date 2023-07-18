@@ -12,13 +12,13 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import { useMutation } from "react-query";
 import { deleteNoteApi, fetchNotesByUser } from "../api/routes";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import styled from '@emotion/styled';
 
 const ellipsisStyle = {
   height: "3em",
@@ -29,22 +29,19 @@ const ellipsisStyle = {
   WebkitLineClamp: 2,
 };
 
-const useStyles = makeStyles({
-  slideInUp: {
-    animationName: "$slideInUp",
-    animationDuration: "1s",
-    animationFillMode: "both",
-  },
-  "@keyframes slideInUp": {
-    "0%": {
-      transform: "translateY(100%)",
-      visibility: "visible",
-    },
-    "100%": {
-      transform: "translateY(0)",
-    },
-  },
-});
+const SlideInUpDiv = styled(Card)`
+  animation: slideInUp 1s both;
+
+  @keyframes slideInUp {
+    0% {
+      transform: translateY(100%);
+      visibility: visible;
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+`;
 
 const Note = ({
   tag,
@@ -60,7 +57,6 @@ const Note = ({
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const classes = useStyles();
 
   const getTagColor = (tag) => {
     switch (tag) {
@@ -101,7 +97,7 @@ const Note = ({
   };
 
   return (
-    <Card sx={{ borderRadius: "8px" }} className={classes.slideInUp}>
+    <SlideInUpDiv sx={{ borderRadius: "8px" }}>
       <CardHeader
         avatar={<div style={{ backgroundColor: "red", borderRadius: "50%" }} />}
         title={
@@ -176,7 +172,7 @@ const Note = ({
           )}
         </Grid>
       </Box>
-    </Card>
+    </SlideInUpDiv>
   );
 };
 
