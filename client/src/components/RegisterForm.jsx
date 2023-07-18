@@ -77,7 +77,10 @@ const LoginForm = ({ onSubmit }) => {
               type="password"
               {...register("confirmPassword", { required: true })}
               error={!!errors.password}
-              helperText={errors.confirmPassword !== errors.password && "Password is required"}
+              helperText={
+                errors.confirmPassword !== errors.password &&
+                "Password is required"
+              }
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

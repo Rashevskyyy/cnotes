@@ -20,7 +20,7 @@ const LoginPage = () => {
     },
   });
 
-  return <LoginForm onSubmit={handleLogin} />
+  return <LoginForm onSubmit={handleLogin} />;
 };
 
 export default LoginPage;

@@ -1,5 +1,5 @@
 import api from "./api";
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const loginApi = async (data) => {
   const response = await api.post("/login", data);
@@ -44,17 +44,23 @@ export const getUserInfo = async (token) => {
   }
 };
 
-export const fetchNotesByUser = createAsyncThunk('notes/fetchNotes', async () => {
-  const response = await api.get('/notes');
-  return response.data;
-});
+export const fetchNotesByUser = createAsyncThunk(
+  "notes/fetchNotes",
+  async () => {
+    const response = await api.get("/notes");
+    return response.data;
+  }
+);
 
-export const fetchAllNotes = createAsyncThunk('notes/fetchAllNotes', async () => {
-  const response = await api.get('/notes/all');
-  return response.data;
-});
+export const fetchAllNotes = createAsyncThunk(
+  "notes/fetchAllNotes",
+  async () => {
+    const response = await api.get("/notes/all");
+    return response.data;
+  }
+);
 
-export const getNote = createAsyncThunk('notes/getNote', async (noteId) => {
+export const getNote = createAsyncThunk("notes/getNote", async (noteId) => {
   const response = await api.get(`/note/${noteId}`);
   return response.data;
 });

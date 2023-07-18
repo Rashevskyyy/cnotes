@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
 import { styled } from "@mui/system";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const StyledDivider = styled(Divider)({
   backgroundColor: "#455260",
@@ -14,7 +14,7 @@ const LogoContainer = styled(Box)({
   padding: "8px",
   paddingLeft: 24,
   paddingRight: 24,
-  cursor: 'pointer'
+  cursor: "pointer",
 });
 
 const LogoTypography = styled(Typography)({
@@ -26,8 +26,8 @@ const Logo = () => {
   const navigate = useNavigate();
 
   const handleGoMain = () => {
-    navigate('/notes')
-  }
+    navigate("/notes");
+  };
 
   return (
     <>

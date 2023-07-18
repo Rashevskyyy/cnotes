@@ -3,7 +3,7 @@ import { styled } from "@mui/system";
 import Header from "../components/Header";
 import NotesList from "../components/NotesList";
 import FilterBar from "../components/FilterBar";
-import {useParams} from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const FlexContainer = styled("div")({
   display: "flex",
@@ -14,8 +14,8 @@ const FlexContainer = styled("div")({
 });
 
 const MainPage = () => {
-    let { id } = useParams();
-    console.log('id', id)
+  let { id } = useParams();
+  console.log("id", id);
   return (
     <FlexContainer>
       <Header />

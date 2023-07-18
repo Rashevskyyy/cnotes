@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import {getUserInfo} from '../../api/routes';
+import { getUserInfo } from "../../api/routes";
 
 export const userSlice = createSlice({
   name: "user",
@@ -51,6 +51,7 @@ export const fetchUserInfo = () => async (dispatch, getState) => {
   }
 };
 
-export const { login, logout, register, setUserInfo, updateUserInfoState} = userSlice.actions;
+export const { login, logout, register, setUserInfo, updateUserInfoState } =
+  userSlice.actions;
 
 export default userSlice.reducer;

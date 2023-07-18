@@ -1,12 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import { LoginPage, RegisterPage, MainPage, NoteDetailPage } from "./pages/index";
+import {
+  LoginPage,
+  RegisterPage,
+  MainPage,
+  NoteDetailPage,
+} from "./pages/index";
 import PrivateRoutes from "./components/PrivateRoutes";
 import Cookies from "js-cookie";
 import { darkTheme, lightTheme } from "./themes";
 import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import Settings from './pages/Settings';
+import Settings from "./pages/Settings";
 
 const App = () => {
   const [theme, setTheme] = useState(
@@ -33,8 +38,14 @@ const App = () => {
           </Route>
 
           <Route path="/" element={<LoginPage />} />
-          <Route path="/login" element={<LoginPage toggleTheme={toggleTheme} />} />
-          <Route path="/register" element={<RegisterPage toggleTheme={toggleTheme} />} />
+          <Route
+            path="/login"
+            element={<LoginPage toggleTheme={toggleTheme} />}
+          />
+          <Route
+            path="/register"
+            element={<RegisterPage toggleTheme={toggleTheme} />}
+          />
         </Routes>
       </Box>
     </ThemeProvider>
