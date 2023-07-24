@@ -18,30 +18,16 @@ import { deleteNoteApi, fetchNotesByUser } from "../api/routes";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import styled from '@emotion/styled';
+import {styled} from '@mui/system';
 
-const ellipsisStyle = {
+const DescriptionTypography = styled(Typography)({
   height: "3em",
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
   WebkitBoxOrient: "vertical",
   WebkitLineClamp: 2,
-};
-
-const SlideInUpDiv = styled(Card)`
-  animation: slideInUp 1s both;
-
-  @keyframes slideInUp {
-    0% {
-      transform: translateY(100%);
-      visibility: visible;
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-`;
+});
 
 const Note = ({
   tag,
@@ -51,8 +37,6 @@ const Note = ({
   date,
   idNote,
   href,
-  index,
-  isSelected,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
@@ -97,7 +81,7 @@ const Note = ({
   };
 
   return (
-    <SlideInUpDiv sx={{ borderRadius: "8px" }}>
+    <Card sx={{ borderRadius: "8px" }}>
       <CardHeader
         avatar={<div style={{ backgroundColor: "red", borderRadius: "50%" }} />}
         title={
@@ -132,13 +116,12 @@ const Note = ({
         <Typography variant="h5" component="div" style={{ paddingBottom: 8 }}>
           {title}
         </Typography>
-        <Typography
+        <DescriptionTypography
           variant="body2"
           color="text.secondary"
-          style={ellipsisStyle}
         >
           {description}
-        </Typography>
+        </DescriptionTypography>
       </CardContent>
       <Divider sx={{ width: "85%", mx: "auto" }} />
       <Box p={2}>
@@ -172,7 +155,7 @@ const Note = ({
           )}
         </Grid>
       </Box>
-    </SlideInUpDiv>
+    </Card>
   );
 };
 

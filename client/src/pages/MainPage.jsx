@@ -2,7 +2,6 @@ import React from "react";
 import { styled } from "@mui/system";
 import Header from "../components/Header";
 import NotesList from "../components/NotesList";
-import FilterBar from "../components/FilterBar";
 import { useParams } from "react-router-dom";
 
 const FlexContainer = styled("div")({
@@ -19,7 +18,6 @@ const MainPage = () => {
   return (
     <FlexContainer>
       <Header />
-      <FilterBar />
       <NotesList />
     </FlexContainer>
   );
