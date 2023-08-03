@@ -119,11 +119,78 @@ async function getNote(req, res) {
     }
 }
 
+async function addComment(req, res) {
+    const { noteId } = req.params;
+    const { text } = req.body;
+
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ error: "Токен отсутствует" });
+    }
+
+    const decodedToken = jwt.verify(token, "creative-notes-key");
+    const userId = decodedToken.userId;
+    const firstName = decodedToken.firstName;
+    const lastName = decodedToken.lastName;
+
+    try {
+        const note = await Note.findById(noteId);
+        if (!note) {
+            return res.status(404).json({ error: "Заметка не найдена" });
+        }
+
+        note.comments.push({
+            userId,
+            firstName,
+            lastName,
+            text,
+        });
+
+        await note.save();
+        res.status(201).json({ message: "Комментарий успешно добавлен" });
+    } catch (err) {
+        console.error("Ошибка при добавлении комментария:", err);
+        res.status(500).json({ error: "Произошла ошибка сервера" });
+    }
+}
+
+async function deleteComment(req, res) {
+    const { noteId, commentId } = req.params;
+
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ error: "Токен отсутствует" });
+    }
+
+    try {
+        const note = await Note.findById(noteId);
+        if (!note) {
+            return res.status(404).json({ error: "Заметка не найдена" });
+        }
+
+        const commentIndex = note.comments.findIndex((comment) => comment._id.toString() === commentId);
+        if (commentIndex === -1) {
+            return res.status(404).json({ error: "Комментарий не найден" });
+        }
+
+        note.comments.splice(commentIndex, 1);
+
+        await note.save();
+        res.status(200).json({ message: "Комментарий успешно удален" });
+    } catch (err) {
+        console.error("Ошибка при удалении комментария:", err);
+        res.status(500).json({ error: "Произошла ошибка сервера" });
+    }
+}
 
 module.exports = {
     createNote,
     getNotesByUser,
     getPublishedNotes,
     deleteNote,
-    getNote
+    getNote,
+    addComment,
+    deleteComment
 };

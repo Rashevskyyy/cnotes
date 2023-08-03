@@ -14,6 +14,7 @@ import {
 
 const NoteDetail = (props) => {
   const { selectedNote, handleBack } = props;
+  console.log('selectedNote', selectedNote)
   return (
     <Box p={2}>
       <Button
@@ -24,6 +25,7 @@ const NoteDetail = (props) => {
         Назад
       </Button>
       <Paper elevation={3} sx={{ padding: "1rem" }}>
+        <Paper elevation={3} sx={{ padding: "1rem" }}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <TextField
@@ -80,6 +82,48 @@ const NoteDetail = (props) => {
             </Button>
           </Grid>
         </Grid>
+        </Paper>
+
+        <Box sx={{ marginTop: 2 }}>
+          <Typography sx={{ marginBottom: 1 }} variant="h5">Комментарии:</Typography>
+          <Paper elevation={3} sx={{ padding: "1rem" }}>
+            {selectedNote.comments && selectedNote.comments.length > 0 ? (
+                selectedNote.comments.map((comment, index) => (
+                    <Box key={index} sx={{ marginBottom: 2 }}>
+                      <Typography variant="body1">
+                        <strong>{comment.firstName} {comment.lastName}:</strong> {comment.text}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {comment.date}
+                      </Typography>
+                    </Box>
+                ))
+            ) : (
+                <Typography variant="body2" color="textSecondary">
+                  Нет комментариев для этой заметки.
+                </Typography>
+            )}
+          </Paper>
+          <Box sx={{ marginTop: 2 }}>
+            <TextField
+                fullWidth
+                label="Напишите ваш комментарий"
+                variant="outlined"
+                multiline
+                rows={4}
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {}}
+                sx={{ marginTop: 1, backgroundColor: "#334150" }}
+            >
+              Добавить комментарий
+            </Button>
+          </Box>
+        </Box>
+
+
       </Paper>
     </Box>
   );

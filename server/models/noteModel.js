@@ -1,5 +1,23 @@
 const mongoose = require("mongoose");
 
+const commentSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    firstName: String,
+    lastName: String,
+    text: String,
+    date: {
+        type: Date,
+        default: () => {
+            const now = new Date();
+            now.setHours(now.getHours());
+            return now;
+        },
+    },
+});
+
 const noteSchema = new mongoose.Schema({
     tag: String,
     title: String,
@@ -18,10 +36,11 @@ const noteSchema = new mongoose.Schema({
         type: Date,
         default: () => {
             const now = new Date();
-            now.setUTCHours(now.getUTCHours());
+            now.setHours(now.getHours());
             return now;
         },
     },
+    comments: [commentSchema],
 });
 
 const Note = mongoose.model("Note", noteSchema);

@@ -34,6 +34,10 @@ export const notesSlice = createSlice({
         state.currentNote = {
           ...action.payload,
           date: new Date(action.payload.date).toLocaleDateString(),
+          comments: action.payload.comments.map((comment) => ({
+            ...comment,
+            date: new Date(comment.date).toLocaleString(),
+          })),
         };
       });
   },
