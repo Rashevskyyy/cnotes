@@ -1,5 +1,23 @@
 const { User } = require("../models/userModel");
+const Note = require("../models/noteModel");
 const { validationResult } = require("express-validator");
+
+async function updateUserNameInComments(userId, newFirstName, newLastName) {
+  const notes = await Note.find({ 'comments.userId': userId });
+
+  const promises = notes.map(async (note) => {
+    note.comments.forEach((comment) => {
+      if (comment.userId.toString() === userId) {
+        comment.firstName = newFirstName;
+        comment.lastName = newLastName;
+      }
+    });
+
+    return note.save();
+  });
+
+  return Promise.all(promises);
+}
 
 async function getUser(req, res) {
   const errors = validationResult(req);
@@ -57,12 +75,18 @@ async function updateUser(req, res) {
   }
 
   try {
+    const oldUser = await User.findById(req.params.id).select("-password -__v");
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-    }).select("-password -__v",);
+    }).select("-password -__v");
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+    // Если имя или фамилия пользователя были изменены, обновите их в комментариях
+    if (oldUser.firstName !== user.firstName || oldUser.lastName !== user.lastName) {
+      await updateUserNameInComments(req.params.id, user.firstName, user.lastName);
     }
 
     res.status(200).json({ message: "User updated successfully", user });

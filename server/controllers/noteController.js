@@ -1,6 +1,6 @@
 const Note = require('../models/noteModel');
 const jwt = require("jsonwebtoken");
-
+const {User} = require('../models/userModel');
 
 async function createNote(req, res) {
     const { tag, title, description, isPublished } = req.body;
@@ -11,10 +11,12 @@ async function createNote(req, res) {
         return res.status(401).json({ error: "Токен отсутствует" });
     }
     const decodedToken = jwt.verify(token, "creative-notes-key");
+    const userId = decodedToken.userId;
 
-    const userId = decodedToken.userId
-    const firstName = decodedToken.firstName;
-    const lastName = decodedToken.lastName;
+    const user = await User.findById(userId);
+    if (!user) {
+        return res.status(404).json({ error: "Пользователь не найден" });
+    }
 
     const newNote = new Note({
         tag,
@@ -22,8 +24,8 @@ async function createNote(req, res) {
         description,
         userId,
         isPublished,
-        firstName,
-        lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
     });
 
     newNote
@@ -36,6 +38,7 @@ async function createNote(req, res) {
             res.status(500).json({ error: "Произошла ошибка сервера" });
         });
 }
+
 
 async function getNotesByUser(req, res) {
     const token = req.headers.authorization?.split(" ")[1];
@@ -103,10 +106,9 @@ async function getNote(req, res) {
     }
 
     try {
-        const decodedToken = jwt.verify(token, 'creative-notes-key');
-        const userId = decodedToken.userId;
+        jwt.verify(token, 'creative-notes-key');
 
-        const note = await Note.findOne({ _id: noteId, userId });
+        const note = await Note.findOne({ _id: noteId });
 
         if (!note) {
             return res.status(404).json({ error: 'Заметка не найдена' });
@@ -131,8 +133,11 @@ async function addComment(req, res) {
 
     const decodedToken = jwt.verify(token, "creative-notes-key");
     const userId = decodedToken.userId;
-    const firstName = decodedToken.firstName;
-    const lastName = decodedToken.lastName;
+
+    const user = await User.findById(userId);
+    if (!user) {
+        return res.status(404).json({ error: "Пользователь не найден" });
+    }
 
     try {
         const note = await Note.findById(noteId);
@@ -140,15 +145,18 @@ async function addComment(req, res) {
             return res.status(404).json({ error: "Заметка не найдена" });
         }
 
-        note.comments.push({
+        const comment = {
             userId,
-            firstName,
-            lastName,
+            firstName: user.firstName,
+            lastName: user.lastName,
             text,
-        });
+            date: new Date().toISOString()
+        };
+
+        note.comments.push(comment);
 
         await note.save();
-        res.status(201).json({ message: "Комментарий успешно добавлен" });
+        res.status(201).json(comment);
     } catch (err) {
         console.error("Ошибка при добавлении комментария:", err);
         res.status(500).json({ error: "Произошла ошибка сервера" });
@@ -185,6 +193,44 @@ async function deleteComment(req, res) {
     }
 }
 
+async function updateNote(req, res) {
+    const { id: noteId } = req.params;
+    const { title, tag, description } = req.body;
+
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ error: "Токен отсутствует" });
+    }
+
+    try {
+        const decodedToken = jwt.verify(token, "creative-notes-key");
+        const userId = decodedToken.userId;
+
+        const note = await Note.findOne({ _id: noteId, userId });
+
+        if (!note) {
+            return res.status(404).json({ error: "Заметка не найдена" });
+        }
+
+        if (title !== undefined) {
+            note.title = title;
+        }
+        if (tag !== undefined) {
+            note.tag = tag;
+        }
+        if (description !== undefined) {
+            note.description = description;
+        }
+
+        await note.save();
+        res.status(200).json({ message: "Заметка успешно обновлена", note });
+    } catch (err) {
+        console.error("Ошибка при обновлении заметки:", err);
+        res.status(500).json({ error: "Произошла ошибка сервера" });
+    }
+}
+
 module.exports = {
     createNote,
     getNotesByUser,
@@ -192,5 +238,6 @@ module.exports = {
     deleteNote,
     getNote,
     addComment,
-    deleteComment
+    deleteComment,
+    updateNote
 };

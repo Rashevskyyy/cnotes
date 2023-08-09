@@ -38,7 +38,7 @@ const DialogCreateNote = (props) => {
   const onSubmit = (data) => {
     handleCreateNote(data);
     reset();
-    toast("Заметка создана");
+    toast.success("Заметка создана");
   };
 
   const handleClose = () => {

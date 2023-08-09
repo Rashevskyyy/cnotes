@@ -88,9 +88,9 @@ export const createNoteApi = async (formData) => {
   }
 };
 
-export const deleteNoteApi = async (noteId) => {
+export const createNoteCommentApi = async (noteId, formData) => {
   try {
-    const response = await api.delete(`/note/${noteId}`);
+    const response = await api.post(`/note/${noteId}/comments`, formData);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -98,9 +98,19 @@ export const deleteNoteApi = async (noteId) => {
   }
 };
 
-export const getNoteApi = async (noteId) => {
+export const updateNoteApi = async (noteId, formData) => {
   try {
-    const response = await api.get(`/note/${noteId}`);
+    const response = await api.put(`/note/${noteId}`, formData);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteNoteApi = async (noteId) => {
+  try {
+    const response = await api.delete(`/note/${noteId}`);
     return response.data;
   } catch (error) {
     console.error(error);

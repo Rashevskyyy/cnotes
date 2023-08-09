@@ -12,6 +12,7 @@ import { useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import Settings from "./pages/Settings";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [theme, setTheme] = useState(

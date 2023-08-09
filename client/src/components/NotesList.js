@@ -27,7 +27,6 @@ const NotesList = () => {
     onSuccess: () => {
       setIsOpen(false);
       dispatch(fetchNotesByUser());
-      dispatch(fetchAllNotes());
     },
     onError: (error) => {
       console.log("e", error);
@@ -37,20 +36,20 @@ const NotesList = () => {
   return (
     <Container maxWidth={false} sx={{ marginTop: 8 }}>
       <Grid container spacing={3}>
-          {notes.map((note, index) => (
-              <Grid item xs={12} sm={6} md={4} lg={2} key={note._id}>
-                <Note
-                  idNote={note._id}
-                  tag={note.tag}
-                  title={note.title}
-                  description={note.description}
-                  firstName={note.firstName}
-                  date={note.date}
-                  href={href}
-                  index={index}
-                />
-              </Grid>
-          ))}
+        {notes.map((note, index) => (
+          <Grid item xs={12} sm={6} md={4} lg={2} key={note._id}>
+            <Note
+              idNote={note._id}
+              tag={note.tag}
+              title={note.title}
+              description={note.description}
+              firstName={note.firstName}
+              date={note.date}
+              href={href}
+              index={index}
+            />
+          </Grid>
+        ))}
       </Grid>
       <Fab
         onClick={() => setIsOpen(true)}

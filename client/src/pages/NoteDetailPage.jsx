@@ -2,18 +2,19 @@ import React, { useEffect } from "react";
 import { Box, CircularProgress } from "@mui/material";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getNote } from "../api/routes";
+import { createNoteCommentApi, getNote, updateNoteApi } from "../api/routes";
 import { useNavigate, useParams } from "react-router-dom";
 import NoteDetail from "../components/NoteDetail";
+import { useMutation } from "react-query";
 
 const NoteDetailPage = () => {
-  const { id } = useParams();
+  const { id: noteId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getNote(id));
-  }, [dispatch, id]);
+    dispatch(getNote(noteId));
+  }, [dispatch, noteId]);
 
   const selectedNote = useSelector((state) => state.notes.currentNote);
   const isLoadingCurrentNote = useSelector(
@@ -24,6 +25,30 @@ const NoteDetailPage = () => {
     navigate(-1);
   };
 
+  const { mutate: handleCreateComment } = useMutation(
+    ({ commentText }) => createNoteCommentApi(noteId, { text: commentText }),
+    {
+      onSuccess: () => {
+        dispatch(getNote(noteId));
+      },
+      onError: (error) => {
+        console.log("e", error);
+      },
+    }
+  );
+
+  const { mutate: handleUpdateNote } = useMutation(
+    (formData) => updateNoteApi(noteId, formData),
+    {
+      onSuccess: () => {
+        dispatch(getNote(noteId));
+      },
+      onError: (error) => {
+        console.log("e", error);
+      },
+    }
+  );
+
   if (isLoadingCurrentNote) {
     return (
       <Box
@@ -32,12 +57,19 @@ const NoteDetailPage = () => {
         alignItems="center"
         height="100vh"
       >
-        <CircularProgress sx={{ color: "#334150" }} />
+        <CircularProgress />
       </Box>
     );
   }
 
-  return <NoteDetail selectedNote={selectedNote} handleBack={handleBack} />;
+  return (
+    <NoteDetail
+      handleCreateComment={handleCreateComment}
+      handleUpdateNote={handleUpdateNote}
+      selectedNote={selectedNote}
+      handleBack={handleBack}
+    />
+  );
 };
 
 export default NoteDetailPage;

@@ -19,7 +19,6 @@ root.render(
       <CssBaseline />
       <GlobalStyles styles={{ body: { backgroundColor: "#f4f6f8" } }} />
       <BrowserRouter>
-        <App />
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -30,8 +29,9 @@ root.render(
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="dark"
+          theme="light"
         />
+        <App />
       </BrowserRouter>
     </Provider>
   </QueryClientProvider>

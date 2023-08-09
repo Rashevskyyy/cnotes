@@ -18,7 +18,7 @@ import { deleteNoteApi, fetchNotesByUser } from "../api/routes";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import {styled} from '@mui/system';
+import { styled } from "@mui/system";
 
 const DescriptionTypography = styled(Typography)({
   height: "3em",
@@ -29,15 +29,7 @@ const DescriptionTypography = styled(Typography)({
   WebkitLineClamp: 2,
 });
 
-const Note = ({
-  tag,
-  title,
-  description,
-  firstName,
-  date,
-  idNote,
-  href,
-}) => {
+const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,7 +61,7 @@ const Note = ({
     onSuccess: () => {
       handleClose();
       dispatch(fetchNotesByUser());
-      toast("Заметка удалена");
+      toast.success("Заметка удалена");
     },
     onError: (error) => {
       console.log("e", error);
@@ -116,10 +108,7 @@ const Note = ({
         <Typography variant="h5" component="div" style={{ paddingBottom: 8 }}>
           {title}
         </Typography>
-        <DescriptionTypography
-          variant="body2"
-          color="text.secondary"
-        >
+        <DescriptionTypography variant="body2" color="text.secondary">
           {description}
         </DescriptionTypography>
       </CardContent>
