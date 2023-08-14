@@ -1,23 +1,41 @@
-import React, { useEffect } from "react";
+import React, {useState} from "react";
 import {
   Box,
   Button,
   Divider,
   FormControl,
   Grid,
-  InputLabel,
   MenuItem,
   Paper,
   Select,
   TextField,
   Typography,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {useSelector} from 'react-redux';
+
 
 const NoteDetail = (props) => {
-  const { selectedNote, handleBack, handleCreateComment, handleUpdateNote } =
-    props;
+  const { selectedNote, handleBack, handleCreateComment, handleUpdateNote } = props;
+  const [isInputClicked, setIsInputClicked] = useState(false);
+  const user = useSelector((state) => state.user);
+  const isAuthor = user && selectedNote ? user?.user?._id === selectedNote?.userId : false
+
+  const getTagColor = (tag) => {
+    switch (tag) {
+      case "Management":
+        return "#f44336";
+      case "Development":
+        return "#2196f3";
+      case "Design":
+        return "#4caf50";
+      default:
+        return "#9e9e9e";
+    }
+  };
+
+  const tagColor = getTagColor(selectedNote.tag);
 
   const { register, handleSubmit, reset, control } = useForm({
     defaultValues: {
@@ -36,154 +54,236 @@ const NoteDetail = (props) => {
     reset();
   };
 
+
+  const handleInputClick = () => {
+    setIsInputClicked(true);
+  };
+
   return (
-    <Box p={2}>
-      <Button
-        variant="contained"
-        onClick={handleBack}
-        sx={{ padding: "1rem", marginBottom: 2, backgroundColor: "#334150" }}
-      >
-        Назад
-      </Button>
-      <Paper elevation={3} sx={{ padding: "1rem" }}>
-        <Typography variant="body1">
-          <strong>{selectedNote.title}</strong>
-        </Typography>
-        <Box elevation={3} sx={{ padding: "1rem" }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container xs={6} spacing={2}>
-              <Grid item xs={12}>
-                <Controller
-                  name="title"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      fullWidth
-                      label="Title"
-                      sx={{ marginBottom: 2 }}
-                      {...field}
-                    />
-                  )}
-                />
+      <Box p={2}>
+        <Button
+            variant="contained"
+            onClick={handleBack}
+            sx={{
+              padding: "1rem",
+              marginBottom: 2,
+              backgroundColor: "#334150",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+        >
+          <ArrowBackIcon />
+        </Button>
+        <Paper elevation={3}>
+          <Box elevation={3} sx={{ padding: "1rem" }}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={2}>
+                {isAuthor ? (
+                    <>
+                        <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                          <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                            Title
+                          </Typography>
+                        </Grid>
+                    <Grid item xs={11}>
+                      <Controller
+                          name="title"
+                          control={control}
+                          render={({ field }) => (
+                              <TextField
+                                  fullWidth
+                                  variant="outlined"
+                                  {...field}
+                              />
+                          )}
+                      />
+                    </Grid>
+                  <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                  Tag
+                </Typography>
               </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth sx={{ marginBottom: 2 }}>
-                  <InputLabel id="tag-label">Tag</InputLabel>
+              <Grid item xs={11}>
+                <FormControl fullWidth variant="outlined">
                   <Controller
-                    name="tag"
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        value={field.value}
-                        onChange={field.onChange}
-                        labelId="tag-label"
-                        label="Tag"
-                      >
-                        <MenuItem value="Management">Management</MenuItem>
-                        <MenuItem value="Development">Development</MenuItem>
-                        <MenuItem value="Design">Design</MenuItem>
-                      </Select>
-                    )}
+                      name="tag"
+                      control={control}
+                      render={({ field }) => (
+                          <Select
+                              {...field}
+                          >
+                            <MenuItem value="Management">Management</MenuItem>
+                            <MenuItem value="Development">Development</MenuItem>
+                            <MenuItem value="Design">Design</MenuItem>
+                          </Select>
+                      )}
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                <Typography variant="body1" sx={{ color: "#888", }}>
+                  Description
+                </Typography>
+              </Grid>
+              <Grid item xs={11}>
                 <Controller
-                  name="description"
-                  control={control}
-                  render={({ field }) => (
-                    <TextField
-                      fullWidth
-                      label="Description"
-                      multiline={true}
-                      sx={{ marginBottom: 2 }}
-                      minRows={5}
-                      maxRows={10}
-                      {...field}
-                    />
-                  )}
+                    name="description"
+                    control={control}
+                    render={({ field }) => (
+                        <TextField
+                            fullWidth
+                            multiline
+                            rows={5}
+                            variant="outlined"
+                            {...field}
+                        />
+                    )}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1">
-                  <strong>First Name:</strong> {selectedNote.firstName}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1">
-                  <strong>Last Name:</strong> {selectedNote.lastName}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1">
-                  <strong>Date:</strong> {selectedNote.date}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} sx={{ float: "right" }}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  sx={{ backgroundColor: "#334150" }}
-                >
-                  Сохранить
-                </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </Box>
-        <Divider />
-        <Paper elevation={5} sx={{ padding: "1rem" }}>
-          <Box sx={{ marginTop: 2 }}>
-            <Typography sx={{ marginBottom: 1 }} variant="h5">
-              Комментарии:
-            </Typography>
-            <Box elevation={3} sx={{ padding: "1rem" }}>
-              {selectedNote.comments && selectedNote.comments.length > 0 ? (
-                  selectedNote.comments.map((comment, index) => (
-                      <Box key={index} sx={{ marginBottom: 2 }}>
+              </>
+                ) : (
+                    <>
+                      <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                        <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                          Title
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={11}>
                         <Typography variant="body1">
-                          <strong>
-                            {comment.firstName} {comment.lastName}:
-                          </strong>{" "}
-                          {comment.text}
+                          {selectedNote.title}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {comment.date}
+                      </Grid>
+                      <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                        <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                          Tag
                         </Typography>
-                      </Box>
-                  ))
-              ) : (
-                  <Typography variant="body2" color="textSecondary">
-                    Нет комментариев для этой заметки.
-                  </Typography>
+                      </Grid>
+
+                      <Grid item xs={11}>
+                        <Typography variant="body1" sx={{color: tagColor, fontWeight: "bold"}}>
+                          <span
+                              style={{
+                                display: "inline-block",
+                                width: "8px",
+                                height: "8px",
+                                borderRadius: "50%",
+                                backgroundColor: tagColor,
+                                marginRight: "8px",
+                              }}
+                          ></span>
+                          {selectedNote.tag}
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                        <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                          Description
+                        </Typography>
+                      </Grid>
+
+                      <Grid item xs={11}>
+                        <Typography variant="body1">
+                          {selectedNote.description}
+                        </Typography>
+                      </Grid>
+                    </>
               )}
+
+                <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                  <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                    Author
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={11}>
+                  <Typography variant="body1">
+                    {selectedNote.firstName + ' ' + selectedNote.lastName}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
+                  <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                    Date
+                  </Typography>
+                </Grid>
+                <Grid item xs={11}>
+                  <Typography variant="body1" >
+                    {selectedNote.date}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "right" }}>
+                  {isAuthor ? (
+                      <Button
+                          variant="contained"
+                          type="submit"
+                          sx={{ backgroundColor: "#334150", color: "#fff" }}
+                      >
+                        Сохранить
+                      </Button>
+                      )
+                      : null
+                  }
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+          <Box sx={{ backgroundColor: '#f6f8fa' }}>
+            <Box sx={{ padding: "1rem" }}>
+              <Typography variant="h5" sx={{ marginBottom: 1 }}>
+                Комментарии:
+              </Typography>
+              <Box elevation={3}>
+                {selectedNote.comments && selectedNote.comments.length > 0 ? (
+                    selectedNote.comments.map((comment, index) => (
+                        <Box key={index} sx={{ marginBottom: 1 }}>
+                          <Typography variant="body1" sx={{marginLeft: '2rem'}}>
+                            <strong>
+                              {comment.firstName} {comment.lastName}:
+                            </strong>{" "}
+                            {comment.text}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary" sx={{marginLeft: '2rem'}}>
+                            {comment.date}
+                          </Typography>
+                        </Box>
+                    ))
+                ) : (
+                    <Typography variant="body2" color="textSecondary">
+                      Нет комментариев для этой заметки.
+                    </Typography>
+                )}
+              </Box>
             </Box>
-            <Box elevation={3} sx={{ padding: "0 1rem" }}>
+            <Divider />
+            <Box elevation={3} sx={{ padding: "1rem" }}>
+              <form onSubmit={handleSubmit(onSubmitComment)}>
               <Box sx={{ marginTop: 2 }}>
-                <form onSubmit={handleSubmit(onSubmitComment)}>
                   <TextField
                       fullWidth
                       label="Напишите ваш комментарий"
                       variant="outlined"
                       multiline
-                      rows={4}
+                      rows={isInputClicked ? 4 : 1}
+                      onFocus={handleInputClick}
+                      onBlur={() => setIsInputClicked(false)}
                       {...register("commentText")}
                   />
                   <Button
                       type="submit"
                       variant="contained"
                       color="primary"
-                      sx={{ marginTop: 1, backgroundColor: "#334150" }}
+                      sx={{ marginTop: 1, backgroundColor: "#334150", color: "#fff" }}
                   >
                     Добавить комментарий
                   </Button>
-                </form>
               </Box>
+              </form>
             </Box>
           </Box>
         </Paper>
-      </Paper>
-    </Box>
+      </Box>
   );
 };
 
