@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@mui/system";
 import Header from "../components/Header";
-import NotesList from "../components/NotesList";
+import NotesList from "../components/Notes/NotesList";
 
 const FlexContainer = styled("div")({
   display: "flex",

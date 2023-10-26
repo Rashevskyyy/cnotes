@@ -4,7 +4,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createNoteCommentApi, getNote, updateNoteApi } from "../api/routes";
 import { useNavigate, useParams } from "react-router-dom";
-import NoteDetail from "../components/NoteDetail";
+import NoteDetail from "../components/Notes/NoteDetail";
 import { useMutation } from "react-query";
 
 const NoteDetailPage = () => {

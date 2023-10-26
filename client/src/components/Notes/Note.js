@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import { useMutation } from "react-query";
-import { deleteNoteApi, fetchNotesByUser } from "../api/routes";
+import { deleteNoteApi, fetchNotesByUser } from "../../api/routes";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";

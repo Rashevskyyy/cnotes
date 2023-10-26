@@ -14,6 +14,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useSelector} from 'react-redux';
+import ValidationError from '../ValidationError/ValidationError';
 
 
 const NoteDetail = (props) => {
@@ -37,7 +38,8 @@ const NoteDetail = (props) => {
 
   const tagColor = getTagColor(selectedNote.tag);
 
-  const { register, handleSubmit, reset, control } = useForm({
+  const { formState: {errors, isDirty} , register, handleSubmit, reset, control } = useForm({
+    mode: 'onBlur',
     defaultValues: {
       title: selectedNote.title || "",
       tag: selectedNote.tag || "",
@@ -87,17 +89,18 @@ const NoteDetail = (props) => {
                           </Typography>
                         </Grid>
                     <Grid item xs={11}>
-                      <Controller
-                          name="title"
-                          control={control}
-                          render={({ field }) => (
-                              <TextField
-                                  fullWidth
-                                  variant="outlined"
-                                  {...field}
-                              />
-                          )}
-                      />
+                       <TextField
+                           fullWidth
+                           variant="outlined"
+                           error={Boolean(errors.title)}
+                           {...register("title", {
+                             required: {
+                               value: true,
+                               message: 'This field is required'
+                             }
+                           })}
+                       />
+                      {errors.title && <ValidationError>{errors.title.message}</ValidationError>}
                     </Grid>
                   <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
                 <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
@@ -127,19 +130,24 @@ const NoteDetail = (props) => {
                 </Typography>
               </Grid>
               <Grid item xs={11}>
-                <Controller
-                    name="description"
-                    control={control}
-                    render={({ field }) => (
-                        <TextField
-                            fullWidth
-                            multiline
-                            rows={5}
-                            variant="outlined"
-                            {...field}
-                        />
-                    )}
-                />
+                  <TextField
+                       fullWidth
+                       multiline
+                       rows={5}
+                       variant="outlined"
+                       error={Boolean(errors.description)}
+                       {...register("description", {
+                         required: {
+                           value: true,
+                           message: 'This field is required'
+                         },
+                         maxLength: {
+                           value: 300,
+                           message: "Max length is 300"
+                         },
+                       })}
+                   />
+                {errors.description && <ValidationError>{errors.description.message}</ValidationError>}
               </Grid>
               </>
                 ) : (
@@ -218,6 +226,7 @@ const NoteDetail = (props) => {
                       <Button
                           variant="contained"
                           type="submit"
+                          disabled={!isDirty}
                           sx={{ backgroundColor: "#334150", color: "#fff" }}
                       >
                         Сохранить

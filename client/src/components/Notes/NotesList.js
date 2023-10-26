@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Grid, Container, Fab } from "@mui/material";
 import Note from "./Note";
 import AddIcon from "@mui/icons-material/Add";
-import DialogCreateNote from "./DialogCreateNote";
+import DialogCreateNote from "../DialogCreateNote";
 import { useMutation } from "react-query";
-import { createNoteApi, fetchAllNotes, fetchNotesByUser } from "../api/routes";
+import { createNoteApi, fetchAllNotes, fetchNotesByUser } from "../../api/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { useHref } from "react-router-dom";
 
@@ -37,7 +37,7 @@ const NotesList = () => {
     <Container maxWidth={false} sx={{ marginTop: 8 }}>
       <Grid container spacing={3}>
         {notes.map((note, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={2} key={note._id}>
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={note._id}>
             <Note
               idNote={note._id}
               tag={note.tag}
