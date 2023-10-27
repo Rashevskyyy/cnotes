@@ -4,7 +4,6 @@ import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/system";
-import { Box, Typography } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
