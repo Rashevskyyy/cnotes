@@ -101,7 +101,7 @@ const LoginForm = ({ onSubmit }) => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/" variant="body2">
                   {"Got an account? Sign in"}
                 </Link>
               </Grid>

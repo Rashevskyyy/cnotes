@@ -40,10 +40,6 @@ const App = () => {
 
           <Route path="/" element={<LoginPage />} />
           <Route
-            path="/login"
-            element={<LoginPage toggleTheme={toggleTheme} />}
-          />
-          <Route
             path="/register"
             element={<RegisterPage toggleTheme={toggleTheme} />}
           />

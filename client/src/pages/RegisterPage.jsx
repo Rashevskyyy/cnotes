@@ -12,7 +12,7 @@ const RegisterPage = ({ toggleTheme }) => {
   const { mutate: handleRegister } = useMutation(registerApi, {
     onSuccess: (data) => {
       dispatch(register(data));
-      navigate("/login");
+      navigate("/");
     },
     onError: (error) => {
       console.log("e", error);

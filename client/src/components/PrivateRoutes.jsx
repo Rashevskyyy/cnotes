@@ -22,7 +22,7 @@ const PrivateRoutes = () => {
   }, [isAuthenticated, dispatch]);
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   return (
