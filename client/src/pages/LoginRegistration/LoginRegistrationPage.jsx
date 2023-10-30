@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
-import { login } from "../store/slices/userSlice";
-import LoginForm from "../components/LoginForm";
-import { loginApi } from "../api/routes";
+import { login } from "../../store/slices/userSlice";
+import LoginForm from "../../components/LoginRegistrationForm/LoginRegistrationForm";
+import { loginApi } from "../../api/routes";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import LoginRegistrationForm from '../../components/LoginRegistrationForm/LoginRegistrationForm';
 
-const LoginPage = () => {
+const LoginRegistrationPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,7 +21,7 @@ const LoginPage = () => {
     },
   });
 
-  return <LoginForm onSubmit={handleLogin} />;
+  return <LoginRegistrationForm onSubmit={handleLogin} />;
 };
 
-export default LoginPage;
+export default LoginRegistrationPage;

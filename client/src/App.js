@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import {
-  LoginPage,
-  RegisterPage,
+  LoginRegistrationPage,
   MainPage,
   NoteDetailPage,
 } from "./pages/index";
@@ -38,11 +37,7 @@ const App = () => {
             <Route path="/publish" element={<MainPage />} />
           </Route>
 
-          <Route path="/" element={<LoginPage />} />
-          <Route
-            path="/register"
-            element={<RegisterPage toggleTheme={toggleTheme} />}
-          />
+          <Route path="/" element={<LoginRegistrationPage />} />
         </Routes>
       </Box>
     </ThemeProvider>
