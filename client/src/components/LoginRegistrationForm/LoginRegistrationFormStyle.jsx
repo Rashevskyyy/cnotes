@@ -1,4 +1,4 @@
-import {keyframes, styled} from '@mui/system';
+import {styled} from '@mui/system';
 import {Container, Tab} from '@mui/material';
 
 export const TabContent = styled('div')(({ theme }) => ({
