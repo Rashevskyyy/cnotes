@@ -10,7 +10,7 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
   width: "100%",
   "& .MuiDrawer-paper": {
     maxWidth: "100%",
-    backgroundColor: "#334150",
+    backgroundColor: theme.palette.primary.main,
     height: "100%",
     position: "unset",
   },

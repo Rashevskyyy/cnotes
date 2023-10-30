@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Container, Fab } from "@mui/material";
+import {Grid, Container, Fab} from "@mui/material";
 import Note from "./Note";
 import AddIcon from "@mui/icons-material/Add";
 import DialogCreateNote from "../DialogCreateNote";
@@ -7,6 +7,14 @@ import { useMutation } from "react-query";
 import { createNoteApi, fetchAllNotes, fetchNotesByUser } from "../../api/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { useHref } from "react-router-dom";
+import {styled} from '@mui/system';
+
+const FabStyled = styled(Fab)(({theme}) => ({
+    backgroundColor: theme.palette.primary.main,
+    position: "fixed",
+    bottom: 60,
+    right: 80,
+}));
 
 const NotesList = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,19 +59,13 @@ const NotesList = () => {
           </Grid>
         ))}
       </Grid>
-      <Fab
+      <FabStyled
         onClick={() => setIsOpen(true)}
         color="primary"
         aria-label="Add"
-        sx={{
-          backgroundColor: "#334150",
-          position: "fixed",
-          bottom: 60,
-          right: 80,
-        }}
       >
         <AddIcon />
-      </Fab>
+      </FabStyled>
       <DialogCreateNote
         isOpen={isOpen}
         setIsOpen={setIsOpen}

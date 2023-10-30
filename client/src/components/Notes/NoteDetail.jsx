@@ -16,7 +16,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useSelector} from 'react-redux';
 import ValidationError from '../ValidationError/ValidationError';
 
-
 const NoteDetail = (props) => {
   const { selectedNote, handleBack, handleCreateComment, handleUpdateNote } = props;
   const [isInputClicked, setIsInputClicked] = useState(false);

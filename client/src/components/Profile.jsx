@@ -21,12 +21,12 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   margin: theme.spacing(2),
 }));
 
-const CustomDivider = styled(Divider)({
-  backgroundColor: "#455260",
+const CustomDivider = styled(Divider)(({theme}) => ({
+  backgroundColor: theme.palette.primary.black,
   width: "75%",
   marginLeft: "auto",
   marginRight: "auto",
-});
+}));
 
 const WhiteText = styled(ListItemText)({
   color: "#ffffff",

@@ -3,10 +3,10 @@ import { Box, Typography, Divider } from "@mui/material";
 import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
 
-const StyledDivider = styled(Divider)({
-  backgroundColor: "#455260",
+const StyledDivider = styled(Divider)(({theme}) => ({
+  backgroundColor: theme.palette.primary.black,
   width: "100%",
-});
+}));
 
 const LogoContainer = styled(Box)({
   display: "flex",
@@ -33,7 +33,7 @@ const Logo = () => {
     <>
       <LogoContainer onClick={handleGoMain}>
         <img
-          src="https://img.icons8.com/office/40/null/logo.png"
+          src="https://www.svgrepo.com/show/212454/note-notepad.svg"
           alt="Logo"
           width="40"
           height="40"

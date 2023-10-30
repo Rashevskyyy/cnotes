@@ -27,7 +27,6 @@ export const StyledTab = styled(Tab)({});
 export const CenteredContainer = styled(Container)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
     padding: theme.spacing(3),

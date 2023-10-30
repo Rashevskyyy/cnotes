@@ -44,14 +44,12 @@ const TabPanel = ({children, value, index, ...other}) => {
 }
 
 const LoginRegistrationForm = ({onLogin, onRegister, value, setValue}) => {
-
     const {
         register,
         handleSubmit,
         formState: {errors},
         reset,
     } = useForm();
-
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -135,4 +133,5 @@ const LoginRegistrationForm = ({onLogin, onRegister, value, setValue}) => {
         </CenteredContainer>
     );
 };
+
 export default LoginRegistrationForm;

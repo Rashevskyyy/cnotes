@@ -3,13 +3,13 @@ import { styled } from "@mui/system";
 import Header from "../components/Header";
 import NotesList from "../components/Notes/NotesList";
 
-const FlexContainer = styled("div")({
+const FlexContainer = styled("div")(({theme}) => ({
   display: "flex",
   flexDirection: "column",
   flexGrow: 1,
-  background: "#f5f6f7",
+  background: theme.palette.primary.cream,
   height: "100vh",
-});
+}));
 
 const MainPage = () => {
   return (
