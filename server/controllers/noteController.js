@@ -39,19 +39,29 @@ async function createNote(req, res) {
         });
 }
 
-
 async function getNotesByUser(req, res) {
-    const token = req.headers.authorization?.split(" ")[1];
+    const { title } = req.query;
 
+    const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
         return res.status(401).json({ error: "Токен отсутствует" });
     }
 
-    const decodedToken = jwt.verify(token, "creative-notes-key");
-    const userId = decodedToken.userId;
+    let userId;
+    try {
+        const decodedToken = jwt.verify(token, "creative-notes-key");
+        userId = decodedToken.userId;
+    } catch (err) {
+        return res.status(401).json({ error: "Неверный токен" });
+    }
+
+    let query = { userId };
+    if (title) {
+        query.title = new RegExp(title, 'i');
+    }
 
     try {
-        const notes = await Note.find({ userId });
+        const notes = await Note.find(query);
         res.status(200).json(notes);
     } catch (err) {
         console.error("Ошибка при получении заметок:", err);
@@ -60,11 +70,18 @@ async function getNotesByUser(req, res) {
 }
 
 async function getPublishedNotes(req, res) {
+    const { title } = req.query;
+
+    let query = { isPublished: true };
+    if (title) {
+        query.title = new RegExp(title, 'i');
+    }
+
     try {
-        const notes = await Note.find({ isPublished: true });
+        const notes = await Note.find(query);
         res.status(200).json(notes);
     } catch (err) {
-        console.error("Ошибка при получении заметок:", err);
+        console.error("Ошибка при получении опубликованных заметок:", err);
         res.status(500).json({ error: "Произошла ошибка сервера" });
     }
 }

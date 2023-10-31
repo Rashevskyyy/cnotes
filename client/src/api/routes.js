@@ -45,17 +45,25 @@ export const getUserInfo = async (token) => {
 };
 
 export const fetchNotesByUser = createAsyncThunk(
-  "notes/fetchNotes",
-  async () => {
-    const response = await api.get("/notes");
-    return response.data;
-  }
+    "notes/fetchNotes",
+    async (title) => {
+      let endpoint = "/notes";
+      if (title) {
+        endpoint += `?title=${title}`;
+      }
+      const response = await api.get(endpoint);
+      return response.data;
+    }
 );
 
 export const fetchAllNotes = createAsyncThunk(
   "notes/fetchAllNotes",
-  async () => {
-    const response = await api.get("/notes/all");
+  async (title) => {
+    let endpoint = "/notes/all";
+    if (title) {
+      endpoint += `?title=${title}`;
+    }
+    const response = await api.get(endpoint);
     return response.data;
   }
 );
