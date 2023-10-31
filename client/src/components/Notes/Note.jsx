@@ -29,6 +29,10 @@ const DescriptionTypography = styled(Typography)({
   WebkitLineClamp: 2,
 });
 
+const CardStyled = styled(Card)(({theme}) => ({
+  backgroundColor: theme.palette.primary.white,
+}));
+
 const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
@@ -73,7 +77,7 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
   };
 
   return (
-    <Card sx={{ borderRadius: "8px" }}>
+    <CardStyled sx={{ borderRadius: "8px" }}>
       <CardHeader
         avatar={<div style={{ backgroundColor: "red", borderRadius: "50%" }} />}
         title={
@@ -144,7 +148,7 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
           )}
         </Grid>
       </Box>
-    </Card>
+    </CardStyled>
   );
 };
 

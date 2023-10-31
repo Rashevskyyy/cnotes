@@ -8,11 +8,79 @@ body {
 }
 
 :root {
-  --background-light: #ffffff;
-  --background-dark: #1f1f1f;
+  --defaultLabel: #334150;
+  --focusedLabel: #334150;
+  --errorLabel: #d32f2f;
+  --focusedBorder: #334150;
+  --errorBorder: #d32f2f;
+  --hoverBorder: red;
+  --beigeDark: #6F5B3E;
+  --cream: #F9F6F0;
+  --beige: #C4AE78;
+  --black: #171515;
+  --white: #fff;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.Toastify__toast-theme--light {
+  background-color: var(--cream) !important;
+  color: var(--black) !important;
+  border-radius: 8px;
+}
+
+.Toastify__toast-icon > svg {
+  color: var(--beigeDark) !important;
+  fill: var(--beigeDark) !important;
+}
+
+.Toastify__toast-theme--colored.Toastify-toast-close {
+  color: var(--black)  !important;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success{
+  background-color: var(--beigeDark)  !important;
+}
+
+.Toastify__toast-theme--colored.Toastify-toast--error {
+  background-color: var(--errorLabel)  !important;
+}
+
+.Toastify__toast-theme--colored.Toastify-toast--warning {
+  background-color: var(--beige)  !important;
+}
+
+.Toastify__toast-theme--colored.Toastify-toast--info {
+  background-color: var(--defaultLabel)  !important;
+}
+
+.Toastify__progress-bar-theme--light {
+  background-color: var(--beigeDark)  !important;
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-text-fill-color: black !important;
+}
+
+/* Для Firefox */
+input:-moz-autofill,
+textarea:-moz-autofill,
+select:-moz-autofill {
+  background-color: transparent !important;
+  color: black !important;
+}
+
+input:-ms-autofill,
+textarea:-ms-autofill,
+select:-ms-autofill {
+  background-color: transparent !important;
+  color: black !important;
+}
+

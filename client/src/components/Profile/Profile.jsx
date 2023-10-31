@@ -1,36 +1,17 @@
 import React, { useState } from "react";
 import {
-  Avatar,
   Collapse,
   List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
+  ListItemIcon, ListItemText,
 } from "@mui/material";
-import { styled } from "@mui/system";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../store/slices/userSlice";
-
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  margin: theme.spacing(2),
-}));
-
-const CustomDivider = styled(Divider)({
-  backgroundColor: "#455260",
-  width: "75%",
-  marginLeft: "auto",
-  marginRight: "auto",
-});
-
-const WhiteText = styled(ListItemText)({
-  color: "#ffffff",
-});
+import { logout } from "../../store/slices/userSlice";
+import {CustomDivider, ListItemStyled, StyledAvatar} from './ProfileStyle';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -53,38 +34,38 @@ const Profile = () => {
 
   return (
     <List>
-      <ListItem button onClick={handleProfileClick}>
+      <ListItemStyled button onClick={handleProfileClick}>
         <ListItemIcon>
           <StyledAvatar>A</StyledAvatar>
         </ListItemIcon>
-        <WhiteText
+        <ListItemText
           primary={
-            user.user !== null
+            user.user !== null || undefined
               ? `${user.user.firstName} ${user.user.lastName}`
               : "Имя пользователя"
           }
         />
         {profileOpen ? (
-          <ExpandLessIcon sx={{ color: "#ffffff" }} />
+          <ExpandLessIcon />
         ) : (
-          <ExpandMoreIcon sx={{ color: "#ffffff" }} />
+          <ExpandMoreIcon />
         )}
-      </ListItem>
+      </ListItemStyled>
       <CustomDivider />
       <Collapse in={profileOpen} timeout="auto" unmountOnExit>
         <List component="div">
-          <ListItem button>
+          <ListItemStyled button>
             <ListItemIcon>
-              <SettingsIcon sx={{ color: "#ffffff" }} />
+              <SettingsIcon />
             </ListItemIcon>
-            <WhiteText primary="Настройки" onClick={handleGoSettings} />
-          </ListItem>
-          <ListItem button>
+            <ListItemText primary="Настройки" onClick={handleGoSettings} />
+          </ListItemStyled>
+          <ListItemStyled button>
             <ListItemIcon>
-              <LogoutIcon sx={{ color: "#ffffff" }} />
+              <LogoutIcon  />
             </ListItemIcon>
-            <WhiteText primary="Выйти" onClick={handleLogout} />
-          </ListItem>
+            <ListItemText primary="Выйти" onClick={handleLogout} />
+          </ListItemStyled>
         </List>
       </Collapse>
     </List>

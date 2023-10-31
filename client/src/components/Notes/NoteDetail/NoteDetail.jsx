@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {
   Box,
-  Button,
   Divider,
   FormControl,
   Grid,
@@ -14,8 +13,8 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useSelector} from 'react-redux';
-import ValidationError from '../ValidationError/ValidationError';
-
+import ValidationError from '../../ValidationError/ValidationError';
+import {AddCommentButton, BackButton, GridStyled, SaveButton, TypographyStyled} from './NoteDetailStyle';
 
 const NoteDetail = (props) => {
   const { selectedNote, handleBack, handleCreateComment, handleUpdateNote } = props;
@@ -63,31 +62,23 @@ const NoteDetail = (props) => {
 
   return (
       <Box p={2}>
-        <Button
+        <BackButton
             variant="contained"
             onClick={handleBack}
-            sx={{
-              padding: "1rem",
-              marginBottom: 2,
-              backgroundColor: "#334150",
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-            }}
         >
           <ArrowBackIcon />
-        </Button>
+        </BackButton>
         <Paper elevation={3}>
           <Box elevation={3} sx={{ padding: "1rem" }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={2}>
                 {isAuthor ? (
                     <>
-                        <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                          <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                        <GridStyled item xs={1}>
+                          <TypographyStyled variant="body1">
                             Title
-                          </Typography>
-                        </Grid>
+                          </TypographyStyled>
+                        </GridStyled>
                     <Grid item xs={11}>
                        <TextField
                            fullWidth
@@ -102,11 +93,11 @@ const NoteDetail = (props) => {
                        />
                       {errors.title && <ValidationError>{errors.title.message}</ValidationError>}
                     </Grid>
-                  <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                  <GridStyled item xs={1}>
+                <TypographyStyled variant="body1">
                   Tag
-                </Typography>
-              </Grid>
+                </TypographyStyled>
+              </GridStyled>
               <Grid item xs={11}>
                 <FormControl fullWidth variant="outlined">
                   <Controller
@@ -124,11 +115,11 @@ const NoteDetail = (props) => {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                <Typography variant="body1" sx={{ color: "#888", }}>
+              <GridStyled item xs={1}>
+                <Typography variant="body1">
                   Description
                 </Typography>
-              </Grid>
+              </GridStyled>
               <Grid item xs={11}>
                   <TextField
                        fullWidth
@@ -152,22 +143,22 @@ const NoteDetail = (props) => {
               </>
                 ) : (
                     <>
-                      <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                        <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                      <GridStyled item xs={1}>
+                        <TypographyStyled variant="body1">
                           Title
-                        </Typography>
-                      </Grid>
+                        </TypographyStyled>
+                      </GridStyled>
 
                       <Grid item xs={11}>
                         <Typography variant="body1">
                           {selectedNote.title}
                         </Typography>
                       </Grid>
-                      <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                        <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                      <GridStyled item xs={1}>
+                        <TypographyStyled variant="body1">
                           Tag
-                        </Typography>
-                      </Grid>
+                        </TypographyStyled>
+                      </GridStyled>
 
                       <Grid item xs={11}>
                         <Typography variant="body1" sx={{color: tagColor, fontWeight: "bold"}}>
@@ -185,11 +176,11 @@ const NoteDetail = (props) => {
                         </Typography>
                       </Grid>
 
-                      <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                        <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                      <GridStyled item xs={1}>
+                        <TypographyStyled variant="body1">
                           Description
-                        </Typography>
-                      </Grid>
+                        </TypographyStyled>
+                      </GridStyled>
 
                       <Grid item xs={11}>
                         <Typography variant="body1">
@@ -199,11 +190,11 @@ const NoteDetail = (props) => {
                     </>
               )}
 
-                <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                  <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                <GridStyled item xs={1}>
+                  <TypographyStyled variant="body1">
                     Author
-                  </Typography>
-                </Grid>
+                  </TypographyStyled>
+                </GridStyled>
 
                 <Grid item xs={11}>
                   <Typography variant="body1">
@@ -211,11 +202,11 @@ const NoteDetail = (props) => {
                   </Typography>
                 </Grid>
 
-                <Grid item xs={1} sx={{display: 'flex', alignItems: "center" }}>
-                  <Typography variant="body1" sx={{ color: "#888", display: 'flex', alignItems: "center" }}>
+                <GridStyled item xs={1}>
+                  <TypographyStyled variant="body1">
                     Date
-                  </Typography>
-                </Grid>
+                  </TypographyStyled>
+                </GridStyled>
                 <Grid item xs={11}>
                   <Typography variant="body1" >
                     {selectedNote.date}
@@ -223,14 +214,13 @@ const NoteDetail = (props) => {
                 </Grid>
                 <Grid item xs={12} sx={{ textAlign: "right" }}>
                   {isAuthor ? (
-                      <Button
+                      <SaveButton
                           variant="contained"
                           type="submit"
                           disabled={!isDirty}
-                          sx={{ backgroundColor: "#334150", color: "#fff" }}
                       >
                         Сохранить
-                      </Button>
+                      </SaveButton>
                       )
                       : null
                   }
@@ -238,7 +228,7 @@ const NoteDetail = (props) => {
               </Grid>
             </form>
           </Box>
-          <Box sx={{ backgroundColor: '#f6f8fa' }}>
+          <Box>
             <Box sx={{ padding: "1rem" }}>
               <Typography variant="h5" sx={{ marginBottom: 1 }}>
                 Комментарии:
@@ -268,7 +258,7 @@ const NoteDetail = (props) => {
             <Divider />
             <Box elevation={3} sx={{ padding: "1rem" }}>
               <form onSubmit={handleSubmit(onSubmitComment)}>
-              <Box sx={{ marginTop: 2 }}>
+              <Box>
                   <TextField
                       fullWidth
                       label="Напишите ваш комментарий"
@@ -279,14 +269,13 @@ const NoteDetail = (props) => {
                       onBlur={() => setIsInputClicked(false)}
                       {...register("commentText")}
                   />
-                  <Button
+                  <AddCommentButton
                       type="submit"
                       variant="contained"
                       color="primary"
-                      sx={{ marginTop: 1, backgroundColor: "#334150", color: "#fff" }}
                   >
                     Добавить комментарий
-                  </Button>
+                  </AddCommentButton>
               </Box>
               </form>
             </Box>

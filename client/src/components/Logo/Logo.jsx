@@ -1,26 +1,6 @@
 import React from "react";
-import { Box, Typography, Divider } from "@mui/material";
-import { styled } from "@mui/system";
 import { useNavigate } from "react-router-dom";
-
-const StyledDivider = styled(Divider)({
-  backgroundColor: "#455260",
-  width: "100%",
-});
-
-const LogoContainer = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  padding: "8px",
-  paddingLeft: 24,
-  paddingRight: 24,
-  cursor: "pointer",
-});
-
-const LogoTypography = styled(Typography)({
-  padding: 8,
-  color: "#ffffff",
-});
+import {LogoContainer, LogoTypography, StyledDivider} from './LogoStyle';
 
 const Logo = () => {
   const navigate = useNavigate();
@@ -33,7 +13,7 @@ const Logo = () => {
     <>
       <LogoContainer onClick={handleGoMain}>
         <img
-          src="https://img.icons8.com/office/40/null/logo.png"
+          src="https://www.svgrepo.com/show/212454/note-notepad.svg"
           alt="Logo"
           width="40"
           height="40"

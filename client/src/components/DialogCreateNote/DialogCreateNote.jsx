@@ -17,7 +17,7 @@ import {
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import {toast} from "react-toastify";
-import ValidationError from './ValidationError/ValidationError';
+import ValidationError from '../ValidationError/ValidationError';
 
 const DialogCreateNote = (props) => {
     const {isOpen, setIsOpen, handleCreateNote} = props;
@@ -49,7 +49,7 @@ const DialogCreateNote = (props) => {
     };
 
     return (
-        <Dialog open={isOpen} fullWidth maxWidth="md">
+        <Dialog open={isOpen} fullWidth maxWidth="sm">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogContent>
                     <Grid container spacing={2}>
