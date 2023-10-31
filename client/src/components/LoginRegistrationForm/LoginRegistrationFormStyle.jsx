@@ -3,7 +3,6 @@ import {Container, Tab} from '@mui/material';
 
 export const TabContent = styled('div')(({ theme }) => ({
     width: '100%',
-    maxWidth: '400px',
     '& .MuiTabs-indicator': {
         backgroundColor: 'transparent',
     },
@@ -13,7 +12,7 @@ export const TabContent = styled('div')(({ theme }) => ({
         backgroundColor: theme.palette.primary.main,
         color: '#ffffff',
         '&:not(:last-of-type)': {
-            borderRight: `1px solid ${theme.palette.divider}`,
+            borderRight: `1px solid ${theme.palette.primary.black}`,
         },
     },
     '& .Mui-selected': {
@@ -25,6 +24,8 @@ export const TabContent = styled('div')(({ theme }) => ({
 export const StyledTab = styled(Tab)({});
 
 export const CenteredContainer = styled(Container)(({ theme }) => ({
+    height: '450px',
+    overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

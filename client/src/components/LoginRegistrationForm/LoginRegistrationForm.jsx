@@ -35,7 +35,7 @@ const TabPanel = ({children, value, index, ...other}) => {
             {...other}
         >
             {value === index && (
-                <Box sx={{pt: 2, pb: 2}}>
+                <Box sx={{pt: 2, pb: 2, height: '285px'}}>
                     {children}
                 </Box>
             )}
@@ -97,7 +97,6 @@ const LoginRegistrationForm = ({onLogin, onRegister, value, setValue}) => {
                         Login
                     </Button>
                     </form>
-
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <form onSubmit={handleSubmit(onRegister)}>

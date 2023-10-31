@@ -1,9 +1,9 @@
 import React from "react";
 import { Drawer } from "@mui/material";
 import { styled } from "@mui/system";
-import Logo from "./Logo";
-import Profile from "./Profile";
-import NavigationLinks from "./NavigationLinks";
+import Logo from "../Logo/Logo";
+import Profile from "../Profile/Profile";
+import NavigationLinks from "../NavigationLinks/NavigationLinks";
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   flexShrink: 0,

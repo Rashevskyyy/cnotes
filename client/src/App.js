@@ -17,11 +17,11 @@ const App = () => {
         Cookies.get("theme") === "dark" ? darkTheme : lightTheme
     );
 
-    const toggleTheme = () => {
-        const newTheme = theme.palette.mode === "light" ? darkTheme : lightTheme;
-        setTheme(newTheme);
-        Cookies.set("theme", newTheme.palette.mode, {expires: 365});
-    };
+    // const toggleTheme = () => {
+    //     const newTheme = theme.palette.mode === "light" ? darkTheme : lightTheme;
+    //     setTheme(newTheme);
+    //     Cookies.set("theme", newTheme.palette.mode, {expires: 365});
+    // };
 
     const muiTheme = createTheme(theme);
 

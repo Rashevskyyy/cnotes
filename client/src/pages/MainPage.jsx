@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "@mui/system";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import NotesList from "../components/Notes/NotesList";
 
 const FlexContainer = styled("div")(({theme}) => ({

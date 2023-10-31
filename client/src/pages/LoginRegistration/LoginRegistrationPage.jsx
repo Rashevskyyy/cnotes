@@ -6,14 +6,6 @@ import {useNavigate} from "react-router-dom";
 import LoginRegistrationForm from '../../components/LoginRegistrationForm/LoginRegistrationForm';
 import {useState} from 'react';
 import {toast} from 'react-toastify';
-import {styled} from '@mui/system';
-
-export const LoginContainer = styled('div')(({theme}) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-}));
 
 const LoginRegistrationPage = () => {
     const [value, setValue] = useState(0);
@@ -43,9 +35,7 @@ const LoginRegistrationPage = () => {
     });
 
     return (
-        <LoginContainer>
             <LoginRegistrationForm onLogin={handleLogin} onRegister={handleRegister} value={value} setValue={setValue}/>
-        </LoginContainer>
     );
 };
 

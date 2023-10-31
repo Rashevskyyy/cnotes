@@ -3,7 +3,7 @@ import useAuth from "../hooks/useAuth";
 import { Navigate, Outlet } from "react-router-dom";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/system";
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 import { useDispatch } from "react-redux";
 import { fetchUserInfo } from "../store/slices/userSlice";
 

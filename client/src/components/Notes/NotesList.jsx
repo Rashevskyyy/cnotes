@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {Grid, Container, Fab} from "@mui/material";
+import {Grid, Container, Fab, Box, CircularProgress} from "@mui/material";
 import Note from "./Note";
 import AddIcon from "@mui/icons-material/Add";
-import DialogCreateNote from "../DialogCreateNote";
+import DialogCreateNote from "../DialogCreateNote/DialogCreateNote";
 import { useMutation } from "react-query";
 import { createNoteApi, fetchAllNotes, fetchNotesByUser } from "../../api/routes";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,9 @@ const NotesList = () => {
   const dispatch = useDispatch();
   const href = useHref();
   const notes = useSelector((state) => state.notes.notes);
+  const isLoading = useSelector(
+      (state) => state.notes.isLoadingNotes
+  );
 
   useEffect(() => {
     if (href === "/notes") {
@@ -40,6 +43,20 @@ const NotesList = () => {
       console.log("e", error);
     },
   });
+
+
+    if (isLoading) {
+        return (
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                height="100vh"
+            >
+                <CircularProgress />
+            </Box>
+        );
+    }
 
   return (
     <Container maxWidth={false} sx={{ marginTop: 8 }}>
