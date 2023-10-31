@@ -5,17 +5,15 @@ import {
     NoteDetailPage,
 } from "./pages/index";
 import PrivateRoutes from "./components/PrivateRoutes";
-import Cookies from "js-cookie";
-import {darkTheme, lightTheme} from "./themes";
-import {useState} from "react";
-import {ThemeProvider, createTheme} from "@mui/material/styles";
+import {lightTheme} from "./themes";
+import {ThemeProvider} from "@mui/material/styles";
 import {Box} from "@mui/material";
 import Settings from "./pages/Settings";
 
 const App = () => {
-    const [theme, setTheme] = useState(
-        Cookies.get("theme") === "dark" ? darkTheme : lightTheme
-    );
+    // const [theme, setTheme] = useState(
+    //     Cookies.get("theme") === "dark" ? darkTheme : lightTheme
+    // );
 
     // const toggleTheme = () => {
     //     const newTheme = theme.palette.mode === "light" ? darkTheme : lightTheme;
@@ -23,10 +21,10 @@ const App = () => {
     //     Cookies.set("theme", newTheme.palette.mode, {expires: 365});
     // };
 
-    const muiTheme = createTheme(theme);
+    // const muiTheme = createTheme(theme);
 
     return (
-        <ThemeProvider theme={muiTheme}>
+        <ThemeProvider theme={lightTheme}>
             <Box sx={{
                 height: "100vh",
                 display: 'flex',
