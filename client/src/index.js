@@ -6,9 +6,9 @@ import store from "./store/store";
 import { Provider } from "react-redux";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
-import {Container, CssBaseline} from "@mui/material";
+import {CssBaseline} from "@mui/material";
 import App from "./App";
-import {GlobalStyles, styled} from "@mui/system";
+import {GlobalStyles} from "@mui/system";
 import { ToastContainer } from "react-toastify";
 import backgroundImage from './images/background2.jpg'
 
@@ -21,7 +21,7 @@ root.render(
       <CssBaseline />
       <GlobalStyles styles={{ body: {
           backgroundColor: "#C4AE78",
-              backgroundSize: 'contain',
+          backgroundSize: 'contain',
           backgroundImage: `url('${backgroundImage}')`
       }}} />
       <BrowserRouter>
