@@ -24,7 +24,7 @@ export const TabContent = styled('div')(({ theme }) => ({
 export const StyledTab = styled(Tab)({});
 
 export const CenteredContainer = styled(Container)(({ theme }) => ({
-    height: '450px',
+    // height: '100%',
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',

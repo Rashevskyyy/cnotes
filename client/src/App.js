@@ -8,7 +8,7 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import {lightTheme} from "./themes";
 import {ThemeProvider} from "@mui/material/styles";
 import {Box} from "@mui/material";
-import Settings from "./pages/Settings";
+import Settings from "./pages/Settings/Settings";
 
 const App = () => {
     // const [theme, setTheme] = useState(
