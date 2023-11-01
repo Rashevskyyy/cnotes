@@ -64,7 +64,7 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
   const { mutate: handleDelete } = useMutation(() => deleteNoteApi(idNote), {
     onSuccess: () => {
       handleClose();
-      dispatch(fetchNotesByUser());
+      dispatch(fetchNotesByUser({}));
       toast.success("Заметка удалена");
     },
     onError: (error) => {

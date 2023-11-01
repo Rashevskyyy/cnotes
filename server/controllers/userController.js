@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const { User } = require("../models/userModel");
 const Note = require("../models/noteModel");
 const { validationResult } = require("express-validator");
@@ -55,9 +56,9 @@ async function createUser(req, res) {
     return res.status(422).json({ errors: errors.array() });
   }
 
-  const { email, password } = req.body;
+  const { email, password, firstName, lastName } = req.body;
 
-  const user = new User({ email, password });
+  const user = new User({ email, password, firstName, lastName });
   try {
     await user.save();
     res.status(200).json({ message: "User created successfully" });
@@ -84,7 +85,6 @@ async function updateUser(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Если имя или фамилия пользователя были изменены, обновите их в комментариях
     if (oldUser.firstName !== user.firstName || oldUser.lastName !== user.lastName) {
       await updateUserNameInComments(req.params.id, user.firstName, user.lastName);
     }
@@ -157,6 +157,32 @@ async function getUserInfo(req, res) {
   }
 }
 
+async function changePassword(req, res) {
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.user.userId;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ error: "Текущий пароль неверен" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Пароль успешно изменен" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getUser,
   getAllUser,
@@ -165,4 +191,5 @@ module.exports = {
   deleteUser,
   updateUserAvatar,
   getUserInfo,
+  changePassword,
 };

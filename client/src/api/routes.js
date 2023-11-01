@@ -87,6 +87,19 @@ export const updateUserInfo = async (userId, firstName, lastName) => {
   }
 };
 
+export const updatePassword = async (currentPassword, newPassword) => {
+  try {
+    const response = await api.post(`/change-password`, {
+      currentPassword,
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const createNoteApi = async (formData) => {
   try {
     const response = await api.post(`/note`, formData);
