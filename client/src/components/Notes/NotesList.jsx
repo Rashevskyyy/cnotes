@@ -27,17 +27,17 @@ const NotesList = () => {
 
   useEffect(() => {
     if (href === "/notes") {
-      dispatch(fetchNotesByUser());
+      dispatch(fetchNotesByUser({}));
     }
     if (href === "/publish") {
-      dispatch(fetchAllNotes());
+      dispatch(fetchAllNotes({}));
     }
   }, [dispatch, href]);
 
   const { mutate: handleCreateNote } = useMutation(createNoteApi, {
     onSuccess: () => {
       setIsOpen(false);
-      dispatch(fetchNotesByUser());
+      dispatch(fetchNotesByUser({}));
     },
     onError: (error) => {
       console.log("e", error);

@@ -74,11 +74,14 @@ async function getNotesByUser(req, res) {
 }
 
 async function getPublishedNotes(req, res) {
-    const { title } = req.query;
+    const { title, tag } = req.query;
 
     let query = { isPublished: true };
     if (title) {
         query.title = new RegExp(title, 'i');
+    }
+    if (tag) {
+        query.tag = tag;
     }
 
     try {
