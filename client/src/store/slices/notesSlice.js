@@ -26,6 +26,9 @@ export const notesSlice = createSlice({
             .addCase(fetchNotesByUser.rejected, (state, action) => {
                 state.isLoadingNotes = false
             })
+            .addCase(fetchAllNotes.pending, (state, action) => {
+                state.isLoadingNotes = true;
+            })
             .addCase(fetchAllNotes.fulfilled, (state, action) => {
                 state.notes = action.payload.map((note) => {
                     return {
@@ -33,6 +36,10 @@ export const notesSlice = createSlice({
                         date: new Date(note.date).toLocaleDateString(),
                     };
                 });
+                state.isLoadingNotes = false;
+            })
+            .addCase(fetchAllNotes.rejected, (state, action) => {
+                state.isLoadingNotes = true;
             })
             .addCase(getNote.pending, (state, action) => {
                 state.isLoadingCurrentNote = true;

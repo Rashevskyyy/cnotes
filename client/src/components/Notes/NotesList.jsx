@@ -6,7 +6,7 @@ import DialogCreateNote from "../DialogCreateNote/DialogCreateNote";
 import { useMutation } from "react-query";
 import { createNoteApi, fetchAllNotes, fetchNotesByUser } from "../../api/routes";
 import { useDispatch, useSelector } from "react-redux";
-import { useHref } from "react-router-dom";
+import {useHref, useLocation} from "react-router-dom";
 import {styled} from '@mui/system';
 
 const FabStyled = styled(Fab)(({theme}) => ({
@@ -24,15 +24,6 @@ const NotesList = () => {
   const isLoading = useSelector(
       (state) => state.notes.isLoadingNotes
   );
-
-  useEffect(() => {
-    if (href === "/notes") {
-      dispatch(fetchNotesByUser({}));
-    }
-    if (href === "/publish") {
-      dispatch(fetchAllNotes({}));
-    }
-  }, [dispatch, href]);
 
   const { mutate: handleCreateNote } = useMutation(createNoteApi, {
     onSuccess: () => {
