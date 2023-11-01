@@ -40,7 +40,7 @@ async function createNote(req, res) {
 }
 
 async function getNotesByUser(req, res) {
-    const { title } = req.query;
+    const { title, tag } = req.query;
 
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
@@ -59,6 +59,10 @@ async function getNotesByUser(req, res) {
     if (title) {
         query.title = new RegExp(title, 'i');
     }
+    if (tag) {
+        query.tag = tag;
+    }
+
 
     try {
         const notes = await Note.find(query);

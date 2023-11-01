@@ -46,22 +46,23 @@ export const getUserInfo = async (token) => {
 
 export const fetchNotesByUser = createAsyncThunk(
     "notes/fetchNotes",
-    async (title) => {
+    async ({ category, value }) => {
       let endpoint = "/notes";
-      if (title) {
-        endpoint += `?title=${title}`;
+      if (category && value) {
+        endpoint += `?${category}=${value}`;
       }
       const response = await api.get(endpoint);
       return response.data;
     }
 );
 
+
 export const fetchAllNotes = createAsyncThunk(
   "notes/fetchAllNotes",
-  async (title) => {
+    async ({ category, value }) => {
     let endpoint = "/notes/all";
-    if (title) {
-      endpoint += `?title=${title}`;
+    if (category && value) {
+      endpoint += `?${category}=${value}`;
     }
     const response = await api.get(endpoint);
     return response.data;

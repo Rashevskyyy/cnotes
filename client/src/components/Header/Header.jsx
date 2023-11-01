@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Toolbar from "@mui/material/Toolbar";
 import { Search, SearchIconWrapper, StyledAppBar, StyledInputBase, StyledSearchIcon, StyledSelect } from './HeaderStyle';
 import { fetchAllNotes, fetchNotesByUser } from '../../api/routes';
@@ -29,17 +29,17 @@ const Header = () => {
 
         if (selectedCategory === 'tag') {
             if (href === "/notes") {
-                dispatch(fetchNotesByUser(selectedTag));
+                dispatch(fetchNotesByUser({value: selectedTag, category: 'tag'}));
             }
             if (href === "/publish") {
-                dispatch(fetchAllNotes(selectedTag));
+                dispatch(fetchAllNotes({value: selectedTag, category: 'tag'}));
             }
         } else {
             if (href === "/notes") {
-                dispatch(fetchNotesByUser(searchTerm));
+                dispatch(fetchNotesByUser({value: searchTerm, category: 'title'}));
             }
             if (href === "/publish") {
-                dispatch(fetchAllNotes(searchTerm));
+                dispatch(fetchAllNotes({value: searchTerm, category: 'title'}));
             }
         }
     };
@@ -69,6 +69,19 @@ const Header = () => {
         navigate(href);
     };
 
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const tag = queryParams.get('tag');
+        const title = queryParams.get('title');
+
+        if (tag) {
+            dispatch(fetchNotesByUser({ category: 'tag', value: tag }));
+        } else if (title) {
+            dispatch(fetchNotesByUser({ category: 'title', value: title }));
+        }
+
+    }, []);
+
 
     return (
         <StyledAppBar position="static">
@@ -80,7 +93,6 @@ const Header = () => {
                 >
                     <MenuItem value={'title'}>Название заметки</MenuItem>
                     <MenuItem value={'tag'}>Категория</MenuItem>
-                    <MenuItem value={'author'}>Автор</MenuItem>
                 </StyledSelect>
                 {
                     selectedCategory === 'tag' && (

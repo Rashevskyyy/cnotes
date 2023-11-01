@@ -38,12 +38,6 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
         paddingRight: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create("width"),
         width: "100%",
-        [theme.breakpoints.up("sm")]: {
-            width: "25ch",
-            "&:focus": {
-                width: "40ch",
-            },
-        },
         borderRadius: theme.shape.borderRadius,
         borderColor: theme.palette.primary.black,
         borderWidth: 1,
