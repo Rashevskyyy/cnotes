@@ -26,23 +26,27 @@ const Header = () => {
         } else {
             navigate(href);
         }
+    };
 
-        if (selectedCategory === 'tag') {
-            if (href === "/notes") {
-                dispatch(fetchNotesByUser({value: selectedTag, category: 'tag'}));
-            }
-            if (href === "/publish") {
-                dispatch(fetchAllNotes({value: selectedTag, category: 'tag'}));
-            }
-        } else {
-            if (href === "/notes") {
-                dispatch(fetchNotesByUser({value: searchTerm, category: 'title'}));
-            }
-            if (href === "/publish") {
-                dispatch(fetchAllNotes({value: searchTerm, category: 'title'}));
-            }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            applyFilter();
         }
     };
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const tag = queryParams.get('tag');
+        const title = queryParams.get('title');
+
+        const payload = tag ? { category: 'tag', value: tag } : { category: 'title', value: title };
+
+        if (href === "/notes") {
+            dispatch(fetchNotesByUser(payload));
+        } else if (href === "/publish") {
+            dispatch(fetchAllNotes(payload));
+        }
+    }, [location.search, dispatch, href]);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -60,28 +64,8 @@ const Header = () => {
     const resetFilter = () => {
         setSearchTerm('');
         setSelectedTag('');
-        if (href === "/notes") {
-            dispatch(fetchNotesByUser(''));
-        }
-        if (href === "/publish") {
-            dispatch(fetchAllNotes(''));
-        }
         navigate(href);
     };
-
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const tag = queryParams.get('tag');
-        const title = queryParams.get('title');
-
-        if (tag) {
-            dispatch(fetchNotesByUser({ category: 'tag', value: tag }));
-        } else if (title) {
-            dispatch(fetchNotesByUser({ category: 'title', value: title }));
-        }
-
-    }, []);
-
 
     return (
         <StyledAppBar position="static">
@@ -115,6 +99,7 @@ const Header = () => {
                                 placeholder="Поиск…"
                                 value={searchTerm}
                                 onChange={handleSearchChange}
+                                onKeyDown={handleKeyDown}
                                 inputProps={{"aria-label": "search"}}
                             />
                             <SearchIconWrapper>
