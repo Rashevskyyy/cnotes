@@ -1,6 +1,8 @@
 import {alpha, styled} from '@mui/system';
 import InputBase from '@mui/material/InputBase';
 import AppBar from '@mui/material/AppBar';
+import SearchIcon from '@mui/icons-material/Search';
+import {Select} from '@mui/material';
 
 export const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -36,18 +38,29 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
         paddingRight: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create("width"),
         width: "100%",
-        [theme.breakpoints.up("sm")]: {
-            width: "25ch",
-            "&:focus": {
-                width: "40ch",
-            },
-        },
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: "#fff",
-        borderColor: "#27303a40",
+        borderColor: theme.palette.primary.black,
         borderWidth: 1,
         borderStyle: "solid",
-        color: "#455260",
+        color: theme.palette.primary.main,
+        background: theme.palette.primary.cream,
+    },
+}));
+
+export const StyledSelect = styled(Select)(({ theme }) => ({
+    color: "inherit",
+    marginLeft: theme.spacing(1),
+    "& .MuiInputBase-input": {
+        padding: theme.spacing(1, 1, 1, 1),
+        paddingRight: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create("width"),
+        width: '200px',
+        borderRadius: theme.shape.borderRadius,
+        borderColor: theme.palette.primary.black,
+        borderWidth: 1,
+        borderStyle: "solid",
+        color: theme.palette.primary.main,
+        background: theme.palette.primary.cream,
     },
 }));
 
@@ -55,4 +68,9 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
     backgroundColor: theme.palette.primary.white,
     borderBottom: `1px solid ${theme.palette.primary.black}`,
     boxShadow: "unset",
+}));
+
+export const StyledSearchIcon = styled(SearchIcon)(({ theme }) => ({
+    color: theme.palette.primary.main,
+    zIndex: "2"
 }));

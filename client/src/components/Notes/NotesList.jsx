@@ -44,7 +44,6 @@ const NotesList = () => {
     },
   });
 
-
     if (isLoading) {
         return (
             <Box

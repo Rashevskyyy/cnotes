@@ -1,6 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const {createNote, getNotesByUser, getPublishedNotes, deleteNote, getNote, addComment, deleteComment, updateNote} = require('../controllers/noteController');
+const {
+    createNote,
+    getNotesByUser,
+    getPublishedNotes,
+    deleteNote,
+    getNote,
+    addComment,
+    deleteComment,
+    updateNote
+} = require('../controllers/noteController');
 
 router.post("/note", createNote);
 router.get("/notes", getNotesByUser);
