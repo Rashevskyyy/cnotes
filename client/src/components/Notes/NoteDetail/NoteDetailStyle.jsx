@@ -29,3 +29,20 @@ export const TypographyStyled = styled(Typography)(({theme}) => ({
     display: 'flex',
     alignItems: "center"
 }));
+
+export const TagTypography = styled(({ tagColor, ...props }) => <Typography {...props} />)(({ tagColor }) => ({
+    color: tagColor,
+    fontWeight: 'bold',
+    display: 'inline-flex',
+    alignItems: 'center',
+}));
+
+export const TagIndicator = styled('span')(({ tagColor }) => ({
+    display: 'inline-block',
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    backgroundColor: tagColor,
+    marginRight: '8px',
+}));
+

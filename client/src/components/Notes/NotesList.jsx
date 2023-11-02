@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Grid, Container, Fab, Box, CircularProgress, Typography} from "@mui/material";
-import Note from "./Note";
+import Note from "./Note/Note";
 import AddIcon from "@mui/icons-material/Add";
 import DialogCreateNote from "../DialogCreateNote/DialogCreateNote";
 import {useMutation} from "react-query";
@@ -10,6 +10,7 @@ import {useHref} from "react-router-dom";
 import {styled} from '@mui/system';
 import InfoIcon from "@mui/icons-material/Info";
 import NoItemsIcon from '../../images/no-items.svg'
+import {useTranslation} from 'react-i18next';
 
 const FabStyled = styled(Fab)(({theme}) => ({
     backgroundColor: theme.palette.primary.main,
@@ -19,13 +20,15 @@ const FabStyled = styled(Fab)(({theme}) => ({
 }));
 
 const NotesList = () => {
-    const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const href = useHref();
+    const {t} = useTranslation();
+
     const notes = useSelector((state) => state.notes.notes);
     const isLoading = useSelector(
         (state) => state.notes.isLoadingNotes
     );
+    const [isOpen, setIsOpen] = useState(false);
 
     const {mutate: handleCreateNote} = useMutation(createNoteApi, {
         onSuccess: () => {
@@ -62,7 +65,7 @@ const NotesList = () => {
                 >
                     <img src={NoItemsIcon} alt="No items" style={{ width: 110, height: 110 }} />
                     <Typography variant="h6" color="textSecondary">
-                        No items to display
+                        {t('noItems')}
                     </Typography>
                 </Box>
             ) : (
