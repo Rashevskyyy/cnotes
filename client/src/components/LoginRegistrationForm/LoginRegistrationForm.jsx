@@ -9,6 +9,7 @@ import AppBar from '@mui/material/AppBar';
 import {CenteredContainer, StyledTab, TabContent} from './LoginRegistrationFormStyle';
 import LoginForm from './LoginForm';
 import RegistrationForm from './RegistrationForm';
+import {useTranslation} from 'react-i18next';
 
 function Copyright(props) {
     return (
@@ -19,7 +20,7 @@ function Copyright(props) {
             {...props}
         >
             <Link color="inherit" href="https://rashevskyi-oleksii.xyz">
-                Created by Oleksii Rashevskyi
+                {props.t("createdBy")}
                 {" "}
                 {new Date().getFullYear()}
                 {"."}
@@ -47,6 +48,7 @@ const TabPanel = ({children, value, index, ...other}) => {
 }
 
 const LoginRegistrationForm = ({onLogin, onRegister, value, setValue}) => {
+    const { t } = useTranslation();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -56,8 +58,8 @@ const LoginRegistrationForm = ({onLogin, onRegister, value, setValue}) => {
         <CenteredContainer component="main" maxWidth="xs">
                 <AppBar position="static" component={TabContent}>
                     <Tabs value={value} onChange={handleChange} aria-label="login and register tabs" >
-                        <StyledTab label="Login" id="simple-tab-0" aria-controls="simple-tabpanel-0" />
-                        <StyledTab label="Register" id="simple-tab-1" aria-controls="simple-tabpanel-1"  />
+                        <StyledTab label={t('signin')} id="simple-tab-0" aria-controls="simple-tabpanel-0" />
+                        <StyledTab label={t('register')} id="simple-tab-1" aria-controls="simple-tabpanel-1"  />
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index={0}>
@@ -66,7 +68,7 @@ const LoginRegistrationForm = ({onLogin, onRegister, value, setValue}) => {
                 <TabPanel value={value} index={1}>
                     <RegistrationForm onRegister={onRegister}/>
                 </TabPanel>
-                <Copyright/>
+                <Copyright t={t}/>
         </CenteredContainer>
     );
 };

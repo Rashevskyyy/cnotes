@@ -7,15 +7,17 @@ import {updateUserInfoState} from "../../store/slices/userSlice";
 import {InputContainer, SettingsContainer, StyledButton} from './SettingsStyled';
 import {toast} from 'react-toastify';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
+import {useTranslation} from 'react-i18next';
 
 const Settings = () => {
     const dispatch = useDispatch();
+    const {t} = useTranslation()
     const user = useSelector((state) => state.user);
 
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-    const [firstName, setFirstName] = useState(user.user.firstName);
-    const [lastName, setLastName] = useState(user.user.lastName);
+    const [firstName, setFirstName] = useState(user.user?.firstName);
+    const [lastName, setLastName] = useState(user.user?.lastName);
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -57,7 +59,7 @@ const Settings = () => {
             <InputContainer>
                 <TextField
                     type={showPassword ? "text" : "password"}
-                    label="Текущий пароль"
+                    label={t('currentPassword')}
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     fullWidth
@@ -79,7 +81,7 @@ const Settings = () => {
             <InputContainer>
                 <TextField
                     type={showPassword ? "text" : "password"}
-                    label="Новый пароль"
+                    label={t('newPassword')}
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     fullWidth
@@ -99,12 +101,12 @@ const Settings = () => {
             </InputContainer>
 
             <StyledButton onClick={() => handleChangePassword({currentPassword, newPassword})} variant="contained">
-                Сменить пароль
+                {t('changePassword')}
             </StyledButton>
 
             <InputContainer>
                 <TextField
-                    label="Имя"
+                    label={t('fname')}
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     fullWidth
@@ -113,7 +115,7 @@ const Settings = () => {
 
             <InputContainer>
                 <TextField
-                    label="Фамилия"
+                    label={t('lname')}
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     fullWidth
@@ -124,7 +126,7 @@ const Settings = () => {
                 onClick={() => handleNameChange({firstName, lastName})}
                 variant="contained"
             >
-                Сохранить имя и фамилию
+                {t('save')}
             </StyledButton>
         </SettingsContainer>
     );

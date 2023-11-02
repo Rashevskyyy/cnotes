@@ -3,6 +3,7 @@ import InputBase from '@mui/material/InputBase';
 import AppBar from '@mui/material/AppBar';
 import SearchIcon from '@mui/icons-material/Search';
 import {Select} from '@mui/material';
+import LanguageIcon from '@mui/icons-material/Language';
 
 export const Search = styled("div")(({ theme }) => ({
     position: "relative",
@@ -62,6 +63,27 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
         color: theme.palette.primary.main,
         background: theme.palette.primary.cream,
     },
+}));
+
+export const StyledSelectChangeLanguage = styled(Select)(({ theme }) => ({
+    color: "inherit",
+    "& .MuiInputBase-input": {
+        padding: theme.spacing(1, 1, 1, 1),
+        paddingRight: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create("width"),
+        width: '23px',
+        borderRadius: theme.shape.borderRadius,
+        borderColor: theme.palette.primary.black,
+        borderWidth: 1,
+        borderStyle: "solid",
+        color: theme.palette.primary.main,
+        background: theme.palette.primary.cream,
+    },
+}));
+
+export const StyledLanguageIcon = styled(LanguageIcon)(({ theme }) => ({
+    fill: theme.palette.primary.main,
+    marginRight: theme.spacing(1)
 }));
 
 export const StyledAppBar = styled(AppBar)(({ theme }) => ({

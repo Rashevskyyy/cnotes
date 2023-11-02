@@ -11,6 +11,8 @@ import App from "./App";
 import {GlobalStyles} from "@mui/system";
 import { ToastContainer } from "react-toastify";
 import backgroundImage from './images/background2.jpg'
+import {I18nextProvider} from 'react-i18next';
+import i18n from "./i18n";
 
 const queryClient = new QueryClient();
 
@@ -18,26 +20,28 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
-      <CssBaseline />
+        <CssBaseline />
       <GlobalStyles styles={{ body: {
           backgroundColor: "#C4AE78",
           backgroundSize: 'contain',
           backgroundImage: `url('${backgroundImage}')`
       }}} />
       <BrowserRouter>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-        <App />
+          <I18nextProvider i18n={i18n}>
+              <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+              />
+              <App />
+          </I18nextProvider>
       </BrowserRouter>
     </Provider>
   </QueryClientProvider>

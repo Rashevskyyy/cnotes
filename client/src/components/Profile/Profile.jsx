@@ -12,10 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../store/slices/userSlice";
 import {CustomDivider, ListItemStyled, StyledAvatar} from './ProfileStyle';
+import {useTranslation} from 'react-i18next';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {t} = useTranslation()
   const [profileOpen, setProfileOpen] = useState(false);
   const user = useSelector((state) => state.user);
 
@@ -58,13 +60,13 @@ const Profile = () => {
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
-            <ListItemText primary="Настройки" onClick={handleGoSettings} />
+            <ListItemText primary={t('settings')} onClick={handleGoSettings} />
           </ListItemStyled>
           <ListItemStyled button>
             <ListItemIcon>
               <LogoutIcon  />
             </ListItemIcon>
-            <ListItemText primary="Выйти" onClick={handleLogout} />
+            <ListItemText primary={t('exit')} onClick={handleLogout} />
           </ListItemStyled>
         </List>
       </Collapse>

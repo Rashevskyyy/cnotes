@@ -2,10 +2,12 @@ import React from 'react';
 import {Button, TextField} from '@mui/material';
 import {useForm} from 'react-hook-form';
 import ValidationError from '../ValidationError/ValidationError';
+import {useTranslation} from 'react-i18next';
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const RegistrationForm = ({onRegister}) => {
+    const { t } = useTranslation();
     const {
         register,
         handleSubmit,
@@ -18,18 +20,18 @@ const RegistrationForm = ({onRegister}) => {
                 margin="normal"
                 fullWidth
                 id="email"
-                label="Email Address"
+                label={t('email')}
                 name="email"
                 autoComplete="email"
                 autoFocus
                 {...register("email", {
                     required: {
                         value: true,
-                        message: "Email is required"
+                        message: t('emailReq')
                     },
                     pattern: {
                         value: emailRegex,
-                        message: "Invalid email address"
+                        message: t('emailInvalid')
                     }
                 })}
                 error={!!errors.email}
@@ -40,38 +42,38 @@ const RegistrationForm = ({onRegister}) => {
                 margin="normal"
                 fullWidth
                 id="password"
-                label="Password"
+                label={t('password')}
                 name="password"
                 type="password"
                 {...register("password", {required: true})}
                 error={!!errors.password}
                 FormHelperTextProps={{ component: ValidationError }}
-                helperText={errors.password && "Password is required"}
+                helperText={errors.password && t('passwordReq')}
             />
             <TextField
                 margin="normal"
                 fullWidth
                 id="firstName"
-                label="First name"
+                label={t('fname')}
                 name="firstName"
                 {...register("firstName", {required: true})}
                 error={!!errors.firstName}
                 FormHelperTextProps={{ component: ValidationError }}
-                helperText={errors.firstName && "First name is required"}
+                helperText={errors.firstName && t('fnameReq')}
             />
             <TextField
                 margin="normal"
                 fullWidth
                 id="lastName"
-                label="Last name"
+                label={t('lname')}
                 name="lastName"
                 {...register("lastName", {required: true})}
                 error={!!errors.lastName}
                 FormHelperTextProps={{ component: ValidationError }}
-                helperText={errors.lastName && "Last name is required"}
+                helperText={errors.lastName && t('lnameReq')}
             />
             <Button type="submit" fullWidth variant="contained" color={'primary'} sx={{marginTop: 1}}>
-                Register
+                {t('register')}
             </Button>
         </form>
     );

@@ -2,7 +2,6 @@ import React from "react";
 import {
   Card,
   CardContent,
-  CardHeader,
   Avatar,
   Typography,
   IconButton,
@@ -14,41 +13,28 @@ import {
 } from "@mui/material";
 import { MoreVert as MoreVertIcon } from "@mui/icons-material";
 import { useMutation } from "react-query";
-import { deleteNoteApi, fetchNotesByUser } from "../../api/routes";
+import { deleteNoteApi, fetchNotesByUser } from "../../../api/routes";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/system";
+import {useTranslation} from 'react-i18next';
+import {StyledCardHeader, StyledTypography, StyledAvatar, StyledSpan, DescriptionTypography, CardStyled} from './NoteStyled';
 
-const DescriptionTypography = styled(Typography)({
-  height: "3em",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  WebkitLineClamp: 2,
-});
-
-const CardStyled = styled(Card)(({theme}) => ({
-  backgroundColor: theme.palette.primary.white,
-}));
+export const tagColors = {
+    Management: "#f44336",
+    Development: "#2196f3",
+    Design: "#4caf50",
+    Default: "#9e9e9e"
+};
 
 const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {t} = useTranslation()
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
   const getTagColor = (tag) => {
-    switch (tag) {
-      case "Management":
-        return "#f44336";
-      case "Development":
-        return "#2196f3";
-      case "Design":
-        return "#4caf50";
-      default:
-        return "#9e9e9e";
-    }
+      return tagColors[tag] || tagColors.Default;
   };
 
   const tagColor = getTagColor(tag);
@@ -78,36 +64,20 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
 
   return (
     <CardStyled sx={{ borderRadius: "8px" }}>
-      <CardHeader
-        avatar={<div style={{ backgroundColor: "red", borderRadius: "50%" }} />}
-        title={
-          <Typography
-            onClick={handleCardClick}
-            variant="subtitle1"
-            component="span"
-            style={{
-              cursor: "pointer",
-              display: "inline-flex",
-              alignItems: "center",
-              color: tagColor,
-              fontWeight: "bold",
-            }}
-          >
-            <span
-              style={{
-                display: "inline-block",
-                width: "8px",
-                height: "8px",
-                borderRadius: "50%",
-                backgroundColor: tagColor,
-                marginRight: "12px",
-              }}
-            ></span>
-            {tag}
-          </Typography>
-        }
-        style={{ paddingBottom: 0, paddingTop: 16, paddingLeft: 0 }}
-      />
+        <StyledCardHeader
+            avatar={<StyledAvatar />}
+            title={
+                <StyledTypography
+                    onClick={handleCardClick}
+                    variant="subtitle1"
+                    component="span"
+                    tagColor={tagColor}
+                >
+                    <StyledSpan tagColor={tagColor} />
+                    {t(`${tag.toLowerCase()}`)}
+                </StyledTypography>
+            }
+        />
       <CardContent style={{ cursor: "pointer" }} onClick={handleCardClick}>
         <Typography variant="h5" component="div" style={{ paddingBottom: 8 }}>
           {title}
@@ -142,7 +112,7 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleDelete}>Удалить</MenuItem>
+                <MenuItem onClick={handleDelete}>{t('delete')}</MenuItem>
               </Menu>
             </Grid>
           )}

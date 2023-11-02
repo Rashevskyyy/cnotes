@@ -1,17 +1,34 @@
 import React, {useEffect, useState} from "react";
 import Toolbar from "@mui/material/Toolbar";
-import { Search, SearchIconWrapper, StyledAppBar, StyledInputBase, StyledSearchIcon, StyledSelect } from './HeaderStyle';
+import {
+    Search,
+    SearchIconWrapper,
+    StyledAppBar,
+    StyledInputBase,
+    StyledLanguageIcon,
+    StyledSearchIcon,
+    StyledSelect,
+    StyledSelectChangeLanguage
+} from './HeaderStyle';
 import { fetchAllNotes, fetchNotesByUser } from '../../api/routes';
 import { useHref, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { IconButton, MenuItem, Button } from '@mui/material';
+import {IconButton, MenuItem, Button, Box} from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close";
+import {useTranslation} from 'react-i18next';
+
+const tags = {
+    Development: 'development',
+    Design: 'design',
+    Management: 'management',
+};
 
 const Header = () => {
     const href = useHref();
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
+    const { t, i18n } = useTranslation();
 
     const queryParams = new URLSearchParams(location.search);
     const [searchTerm, setSearchTerm] = useState(queryParams.get('title') || '');
@@ -32,6 +49,10 @@ const Header = () => {
         if (event.key === 'Enter') {
             applyFilter();
         }
+    };
+
+    const changeLanguage = (event) => {
+        i18n.changeLanguage(event.target.value);
     };
 
     useEffect(() => {
@@ -75,8 +96,8 @@ const Header = () => {
                     onChange={handleCategoryChange}
                     displayEmpty
                 >
-                    <MenuItem value={'title'}>Название заметки</MenuItem>
-                    <MenuItem value={'tag'}>Категория</MenuItem>
+                    <MenuItem value={'title'}>{t('title')}</MenuItem>
+                    <MenuItem value={'tag'}>{t('tag')}</MenuItem>
                 </StyledSelect>
                 {
                     selectedCategory === 'tag' && (
@@ -84,11 +105,13 @@ const Header = () => {
                             value={selectedTag}
                             onChange={handleTagChange}
                             displayEmpty
-                            renderValue={(value) => value || "Выберите тег"}
+                            renderValue={(value) => t(tags[value] || 'selectTag')}
                         >
-                            <MenuItem value={'Development'}>Development</MenuItem>
-                            <MenuItem value={'Design'}>Design</MenuItem>
-                            <MenuItem value={'Management'}>Management</MenuItem>
+                            {Object.keys(tags).map(tagValue => (
+                                <MenuItem key={tagValue} value={tagValue}>
+                                    {t(tags[tagValue])}
+                                </MenuItem>
+                            ))}
                         </StyledSelect>
                     )
                 }
@@ -96,7 +119,7 @@ const Header = () => {
                     selectedCategory !== 'tag' ? (
                         <Search>
                             <StyledInputBase
-                                placeholder="Поиск…"
+                                placeholder={`${t('search')}...`}
                                 value={searchTerm}
                                 onChange={handleSearchChange}
                                 onKeyDown={handleKeyDown}
@@ -109,7 +132,7 @@ const Header = () => {
                     ) : null
                 }
                 <Button onClick={applyFilter} variant="contained" color="primary" sx={{ marginLeft: 1 }}>
-                    Поиск
+                    {t('search')}
                 </Button>
                 {
                     (searchTerm || (selectedCategory === 'tag' && selectedTag)) && (
@@ -118,6 +141,17 @@ const Header = () => {
                         </IconButton>
                     )
                 }
+                <Box display="flex" alignItems="center" sx={{ marginLeft: 'auto' }}>
+                    <StyledLanguageIcon />
+                    <StyledSelectChangeLanguage
+                        value={i18n.language}
+                        onChange={changeLanguage}
+                        displayEmpty
+                    >
+                        <MenuItem value="en">EN</MenuItem>
+                        <MenuItem value="ua">UA</MenuItem>
+                    </StyledSelectChangeLanguage>
+                </Box>
             </Toolbar>
         </StyledAppBar>
     );
