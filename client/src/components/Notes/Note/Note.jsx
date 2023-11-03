@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import {useTranslation} from 'react-i18next';
 import {StyledCardHeader, StyledTypography, StyledAvatar, StyledSpan, DescriptionTypography, CardStyled} from './NoteStyled';
+import ReactAvatar from 'react-avatar';
 
 export const tagColors = {
     Management: "#f44336",
@@ -92,7 +93,7 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
           <Grid item>
             <Grid container alignItems="center" spacing={2}>
               <Grid item>
-                <Avatar />
+                  <ReactAvatar name={firstName} size="40" round={true} />
               </Grid>
               <Grid item>
                 <Typography variant="body2">{firstName}</Typography>

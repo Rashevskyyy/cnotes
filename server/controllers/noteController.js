@@ -1,6 +1,6 @@
 const Note = require('../models/noteModel');
 const jwt = require("jsonwebtoken");
-const {User} = require('../models/userModel');
+const {User} = require('../models/userModel')
 
 async function createNote(req, res) {
     const { tag, title, description, isPublished } = req.body;
