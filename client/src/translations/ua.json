@@ -41,5 +41,7 @@
   "exit": "Вихід",
   "currentPassword": "Поточний пароль",
   "newPassword": "Новий пароль",
-  "changePassword": "Змінити пароль"
+  "changePassword": "Змінити пароль",
+  "userRegistered": "Користувач зареєстрований",
+  "errorRequest": "Щось трапилось. Спробуйте ще раз"
 }

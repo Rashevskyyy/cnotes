@@ -12,6 +12,7 @@ import RegistrationForm from './RegistrationForm';
 import {useTranslation} from 'react-i18next';
 
 function Copyright(props) {
+    const {t} = useTranslation()
     return (
         <Typography
             variant="body2"
@@ -20,7 +21,7 @@ function Copyright(props) {
             {...props}
         >
             <Link color="inherit" href="https://rashevskyi-oleksii.xyz">
-                {props.t("createdBy")}
+                {t("createdBy")}
                 {" "}
                 {new Date().getFullYear()}
                 {"."}
@@ -68,7 +69,7 @@ const LoginRegistrationForm = ({onLogin, onRegister, value, setValue}) => {
                 <TabPanel value={value} index={1}>
                     <RegistrationForm onRegister={onRegister}/>
                 </TabPanel>
-                <Copyright t={t}/>
+                <Copyright />
         </CenteredContainer>
     );
 };

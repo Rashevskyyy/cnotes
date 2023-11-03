@@ -6,11 +6,13 @@ import {useNavigate} from "react-router-dom";
 import LoginRegistrationForm from '../../components/LoginRegistrationForm/LoginRegistrationForm';
 import {useState} from 'react';
 import {toast} from 'react-toastify';
+import {useTranslation} from "react-i18next";
 
 const LoginRegistrationPage = () => {
-    const [value, setValue] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {t} = useTranslation()
+    const [value, setValue] = useState(0);
 
     const {mutate: handleLogin} = useMutation(loginApi, {
         onSuccess: (data) => {
@@ -26,10 +28,10 @@ const LoginRegistrationPage = () => {
         onSuccess: (data) => {
             dispatch(register(data));
             setValue(0)
-            toast.success("User registered")
+            toast.success(t("userRegistered"))
         },
         onError: (error) => {
-            toast.error("Smth wrong")
+            toast.error(t('errorRequest'))
             console.log("e", error);
         },
     });

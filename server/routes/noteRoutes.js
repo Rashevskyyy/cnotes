@@ -8,7 +8,8 @@ const {
     getNote,
     addComment,
     deleteComment,
-    updateNote
+    updateNote,
+    toggleLike
 } = require('../controllers/noteController');
 
 router.post("/note", createNote);
@@ -19,5 +20,6 @@ router.get("/notes/all", getPublishedNotes);
 router.delete("/note/:id", deleteNote);
 router.post('/note/:noteId/comments', addComment);
 router.delete('/notes/:noteId/comments/:commentId', deleteComment);
+router.post('/notes/:noteId/toggle-like', toggleLike);
 
 module.exports = router;
