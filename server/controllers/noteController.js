@@ -255,6 +255,35 @@ async function updateNote(req, res) {
     }
 }
 
+async function toggleLike(req, res) {
+    const { noteId } = req.params;
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+        return res.status(401).json({ error: "Токен отсутствует" });
+    }
+
+    const decodedToken = jwt.verify(token, "creative-notes-key");
+    const userId = decodedToken.userId;
+
+    const note = await Note.findById(noteId);
+    if (!note) {
+        return res.status(404).json({ error: "Заметка не найдена" });
+    }
+
+    const userHasLiked = note.likes.includes(userId);
+
+    if (userHasLiked) {
+        note.likes.pull(userId);
+    } else {
+        note.likes.push(userId);
+    }
+
+    await note.save();
+
+    res.status(200).json({ likesCount: note.likes.length });
+}
+
 module.exports = {
     createNote,
     getNotesByUser,
@@ -263,5 +292,6 @@ module.exports = {
     getNote,
     addComment,
     deleteComment,
-    updateNote
+    updateNote,
+    toggleLike
 };

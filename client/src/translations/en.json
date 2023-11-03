@@ -41,5 +41,8 @@
   "exit": "Exit",
   "currentPassword": "Current password",
   "newPassword": "New password",
-  "changePassword": "Change password"
+  "changePassword": "Change password",
+  "userRegistered": "User registered",
+  "errorRequest": "Something wrong. Try again"
+
 }

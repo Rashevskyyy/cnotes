@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Divider,
@@ -25,13 +25,22 @@ import {
 } from './NoteDetailStyle';
 import {tagColors} from '../Note/Note';
 import {useTranslation} from 'react-i18next';
+import IconButton from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import {useMutation} from "react-query";
+import {likeNoteApi} from "../../../api/routes";
+
 
 const NoteDetail = (props) => {
     const {t} = useTranslation()
     const {selectedNote, handleBack, handleCreateComment, handleUpdateNote} = props;
-    const [isInputClicked, setIsInputClicked] = useState(false);
     const user = useSelector((state) => state.user);
+    const [isInputClicked, setIsInputClicked] = useState(false);
+    const [likes, setLikes] = useState(selectedNote?.likes?.length || 0);
+    const [isLiked, setIsLiked] = useState(selectedNote.likes ? selectedNote.likes.includes(user?.user?._id) : false);
     const isAuthor = user && selectedNote ? user?.user?._id === selectedNote?.userId : false
+    const isPublished = selectedNote ? selectedNote.isPublished : false
 
     const getTagColor = (tag) => {
         return tagColors[tag] || tagColors.Default;
@@ -61,6 +70,25 @@ const NoteDetail = (props) => {
     const handleInputClick = () => {
         setIsInputClicked(true);
     };
+
+    const handleLikeClick = () => {
+        handleLikeNote();
+    };
+
+    const { mutate: handleLikeNote } = useMutation(() => likeNoteApi(selectedNote._id), {
+        onSuccess: (data) => {
+            setLikes(data.likesCount);
+            setIsLiked(!isLiked);
+        },
+        onError: (error) => {
+            console.log("Error liking the note:", error);
+        },
+    });
+
+    useEffect(() => {
+        const isNoteLikedByUser = selectedNote.likes ? selectedNote.likes.includes(user?.user?._id) : false;
+        setIsLiked(isNoteLikedByUser);
+    }, [selectedNote.likes, user?.user?._id]);
 
     return (
         <Box p={2}>
@@ -166,7 +194,7 @@ const NoteDetail = (props) => {
                                     <Grid item xs={11}>
                                         <TagTypography variant="body1" tagColor={tagColor}>
                                             <TagIndicator tagColor={tagColor}/>
-                                          {t(`${selectedNote?.tag.toLowerCase()}`)}
+                                          {t(`${selectedNote.tag ? selectedNote.tag.toLowerCase() : ''}`)}
                                         </TagTypography>
                                     </Grid>
 
@@ -206,14 +234,27 @@ const NoteDetail = (props) => {
                                     {selectedNote.date}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12} sx={{textAlign: "right"}}>
+                            <Grid item xs={12} sx={{ textAlign: "right", display: isPublished ? 'flex' : 'unset', justifyContent: 'space-between' }}>
+                                {
+                                    isPublished ? (
+                                        <Box>
+                                            <IconButton onClick={handleLikeClick}>
+                                                {isLiked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
+                                            </IconButton>
+                                            <Typography variant="body2" component="span">
+                                                {likes} {t('like')}
+                                            </Typography>
+                                        </Box>
+                                    ) : null
+                                }
+
                                 {isAuthor ? (
                                         <SaveButton
                                             variant="contained"
                                             type="submit"
                                             disabled={!isDirty}
                                         >
-                                          {t('save')}
+                                            {t('save')}
                                         </SaveButton>
                                     )
                                     : null

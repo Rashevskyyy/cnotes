@@ -120,6 +120,16 @@ export const createNoteCommentApi = async (noteId, formData) => {
   }
 };
 
+export const likeNoteApi = async (noteId) => {
+  try {
+    const response = await api.post(`/notes/${noteId}/toggle-like`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const updateNoteApi = async (noteId, formData) => {
   try {
     const response = await api.put(`/note/${noteId}`, formData);
