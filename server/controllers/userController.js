@@ -3,23 +3,6 @@ const { User } = require("../models/userModel");
 const Note = require("../models/noteModel");
 const { validationResult } = require("express-validator");
 
-async function updateUserNameInComments(userId, newFirstName, newLastName) {
-  const notes = await Note.find({ 'comments.userId': userId });
-
-  const promises = notes.map(async (note) => {
-    note.comments.forEach((comment) => {
-      if (comment.userId.toString() === userId) {
-        comment.firstName = newFirstName;
-        comment.lastName = newLastName;
-      }
-    });
-
-    return note.save();
-  });
-
-  return Promise.all(promises);
-}
-
 async function getUser(req, res) {
   const errors = validationResult(req);
 
@@ -86,7 +69,15 @@ async function updateUser(req, res) {
     }
 
     if (oldUser.firstName !== user.firstName || oldUser.lastName !== user.lastName) {
-      await updateUserNameInComments(req.params.id, user.firstName, user.lastName);
+      await Note.updateMany({ userId: req.params.id }, {
+        firstName: user.firstName,
+        lastName: user.lastName
+      });
+
+      await Note.updateMany({ "comments.userId": req.params.id }, {
+        "comments.$.firstName": user.firstName,
+        "comments.$.lastName": user.lastName
+      });
     }
 
     res.status(200).json({ message: "User updated successfully", user });

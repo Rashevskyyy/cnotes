@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../store/slices/userSlice";
 import {CustomDivider, ListItemStyled, StyledAvatar} from './ProfileStyle';
 import {useTranslation} from 'react-i18next';
+import ReactAvatar from 'react-avatar';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Profile = () => {
     <List>
       <ListItemStyled button onClick={handleProfileClick}>
         <ListItemIcon>
-          <StyledAvatar>A</StyledAvatar>
+          <ReactAvatar name={user.user.firstName} size="40" round={true} style={{margin: "16px"}} />
         </ListItemIcon>
         <ListItemText
           primary={

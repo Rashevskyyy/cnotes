@@ -8,7 +8,6 @@ import {createNoteApi, fetchNotesByUser} from "../../api/routes";
 import {useDispatch, useSelector} from "react-redux";
 import {useHref} from "react-router-dom";
 import {styled} from '@mui/system';
-import InfoIcon from "@mui/icons-material/Info";
 import NoItemsIcon from '../../images/no-items.svg'
 import {useTranslation} from 'react-i18next';
 
@@ -86,14 +85,15 @@ const NotesList = () => {
                     ))}
                 </Grid>
             )}
-
-            <FabStyled
-                onClick={() => setIsOpen(true)}
-                color="primary"
-                aria-label="Add"
-            >
-                <AddIcon/>
-            </FabStyled>
+            {href !== '/publish' ? (
+                <FabStyled
+                    onClick={() => setIsOpen(true)}
+                    color="primary"
+                    aria-label="Add"
+                >
+                    <AddIcon/>
+                </FabStyled>
+            ) : null}
             <DialogCreateNote
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
