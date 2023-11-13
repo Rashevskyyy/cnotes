@@ -8,7 +8,7 @@ const FlexContainer = styled("div")(({theme}) => ({
   flexDirection: "column",
   flexGrow: 1,
   background: theme.palette.primary.cream,
-  height: "100vh",
+  height: "100%",
 }));
 
 const MainPage = () => {

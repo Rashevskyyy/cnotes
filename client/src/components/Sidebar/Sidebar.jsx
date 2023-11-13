@@ -12,9 +12,9 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
     maxWidth: "100%",
     backgroundColor: theme.palette.primary.main,
     height: "100%",
-    position: "unset",
+    position: 'unset'
   },
-  height: "100vh",
+  height: "100%",
   minHeight: "100%",
 }));
 

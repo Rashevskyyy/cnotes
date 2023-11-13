@@ -18,27 +18,25 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import {useTranslation} from 'react-i18next';
-import {StyledCardHeader, StyledTypography, StyledAvatar, StyledSpan, DescriptionTypography, CardStyled} from './NoteStyled';
+import {StyledCardHeader, StyledTypography, StyledAvatar, StyledSpan, DescriptionTypography, CardStyled, TagsContainer, StyledChip} from './NoteStyled';
 import ReactAvatar from 'react-avatar';
 
-export const tagColors = {
-    Management: "#f44336",
-    Development: "#2196f3",
-    Design: "#4caf50",
-    Default: "#9e9e9e"
+export const tags = {
+    work: "work",
+    personal: "personal",
+    education: "education",
+    hobbies: "hobbies",
+    finance: "finance",
+    technology: "technology",
+    family: "family",
+    travel: "travel",
 };
 
-const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
+const Note = ({ tag, title, description, firstName, lastName, date, idNote, href }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {t} = useTranslation()
     const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const getTagColor = (tag) => {
-      return tagColors[tag] || tagColors.Default;
-  };
-
-  const tagColor = getTagColor(tag);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,21 +62,20 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
   };
 
   return (
-    <CardStyled sx={{ borderRadius: "8px" }}>
+    <CardStyled>
         <StyledCardHeader
             avatar={<StyledAvatar />}
             title={
-                <StyledTypography
-                    onClick={handleCardClick}
-                    variant="subtitle1"
-                    component="span"
-                    tagColor={tagColor}
-                >
-                    <StyledSpan tagColor={tagColor} />
-                    {t(`${tag.toLowerCase()}`)}
-                </StyledTypography>
+                <div>
+                    <TagsContainer>
+                        {tag.map((tag, index) => (
+                            <StyledChip key={index} label={t(`${tag}`)} />
+                        ))}
+                    </TagsContainer>
+                </div>
             }
         />
+      <Divider sx={{ width: "100%", mx: "auto" }} />
       <CardContent style={{ cursor: "pointer" }} onClick={handleCardClick}>
         <Typography variant="h5" component="div" style={{ paddingBottom: 8 }}>
           {title}
@@ -93,7 +90,7 @@ const Note = ({ tag, title, description, firstName, date, idNote, href }) => {
           <Grid item>
             <Grid container alignItems="center" spacing={2}>
               <Grid item>
-                  <ReactAvatar name={firstName} size="40" round={true} />
+                  <ReactAvatar name={firstName + " " + lastName} size="40" round={true} />
               </Grid>
               <Grid item>
                 <Typography variant="body2">{firstName}</Typography>

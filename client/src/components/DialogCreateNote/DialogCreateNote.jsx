@@ -1,5 +1,5 @@
-import React from "react";
-import {useForm} from "react-hook-form";
+import React, {useState} from "react";
+import {useForm, Controller} from "react-hook-form";
 import {
     Dialog,
     DialogContent,
@@ -11,14 +11,13 @@ import {
     DialogActions,
     Button,
     FormControlLabel,
-    Checkbox,
     Grid,
+    Switch, Checkbox, ListItemText, Chip, OutlinedInput, Box,
 } from "@mui/material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import {toast} from "react-toastify";
 import ValidationError from '../ValidationError/ValidationError';
 import {useTranslation} from 'react-i18next';
+import {tags} from '../Notes/Note/Note';
 
 const DialogCreateNote = (props) => {
     const {isOpen, setIsOpen, handleCreateNote} = props;
@@ -29,15 +28,21 @@ const DialogCreateNote = (props) => {
         handleSubmit,
         formState: {errors, isValid},
         reset,
+        watch,
+        setValue,
+        getValues,
+        control
     } = useForm({
         mode: 'onBlur',
         defaultValues: {
-            tag: "",
+            tag: [],
             title: "",
             description: "",
             isPublished: false,
         },
     });
+
+    const isPublished = watch("isPublished");
 
     const onSubmit = (data) => {
         handleCreateNote(data);
@@ -48,6 +53,16 @@ const DialogCreateNote = (props) => {
     const handleClose = () => {
         setIsOpen(false);
         reset();
+    };
+
+    const handleToggleChange = (event) => {
+        setValue("isPublished", event.target.checked);
+    };
+
+    const handleDelete = (tagToDelete) => {
+        const currentTags = getValues("tag");
+        const updatedTags = currentTags.filter((tag) => tag !== tagToDelete);
+        setValue("tag", updatedTags);
     };
 
     return (
@@ -72,34 +87,44 @@ const DialogCreateNote = (props) => {
                         <Grid item md={2}>
                             <FormControlLabel
                                 control={
-                                    <Checkbox
-                                        icon={<BookmarkBorderIcon/>}
-                                        checkedIcon={<BookmarkIcon/>}
+                                    <Switch
+                                        checked={isPublished}
+                                        onChange={handleToggleChange}
                                         {...register("isPublished")}
                                     />
                                 }
-                                label={t('publish')}
+                                label={isPublished ? t('publish') : t('private')}
                             />
                         </Grid>
                         <Grid item md={12}>
                             <FormControl fullWidth size="small">
                                 <InputLabel id="tag-label">{t('tag')}</InputLabel>
-                                <Select
-                                    defaultValue={""}
-                                    labelId="tag-label"
-                                    label={t('tag')}
-                                    error={Boolean(errors.tag)}
-                                    {...register("tag", {
-                                        required: {
-                                            value: true,
-                                            message: t('errorDefault')
-                                        }
-                                    })}
-                                >
-                                    <MenuItem value="Management">{t('management')}</MenuItem>
-                                    <MenuItem value="Development">{t('development')}</MenuItem>
-                                    <MenuItem value="Design">{t('design')}</MenuItem>
-                                </Select>
+                                <Controller
+                                    name="tag"
+                                    control={control}
+                                    defaultValue={[]}
+                                    render={({ field }) => (
+                                        <Select
+                                            {...field}
+                                            labelId="tag-label"
+                                            multiple
+                                            input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                            renderValue={(selected) => (
+                                                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                    {selected.map((value) => (
+                                                        <Chip key={value} label={t(`${value}`)} style={{background: '#C4AE78'}} />
+                                                    ))}
+                                                </Box>
+                                            )}
+                                        >
+                                            {Object.keys(tags).map((category, index) => (
+                                                <MenuItem key={index} value={category}>
+                                                    {t(`${category}`)}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    )}
+                                />
                                 {errors.tag && <ValidationError>{errors.tag.message}</ValidationError>}
                             </FormControl>
                         </Grid>

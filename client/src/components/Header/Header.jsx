@@ -3,7 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import {
     Search,
     SearchIconWrapper,
-    StyledAppBar,
+    StyledAppBar, StyledFormControl,
     StyledInputBase,
     StyledLanguageIcon,
     StyledSearchIcon,
@@ -13,14 +13,19 @@ import {
 import { fetchAllNotes, fetchNotesByUser } from '../../api/routes';
 import { useHref, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {IconButton, MenuItem, Button, Box} from '@mui/material';
+import {IconButton, MenuItem, Button, Box, Select, OutlinedInput, Chip, FormControl} from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close";
 import {useTranslation} from 'react-i18next';
 
-const tags = {
-    Development: 'development',
-    Design: 'design',
-    Management: 'management',
+export const tags = {
+    work: "work",
+    personal: "personal",
+    education: "education",
+    hobbies: "hobbies",
+    finance: "finance",
+    technology: "technology",
+    family: "family",
+    travel: "travel",
 };
 
 const Header = () => {
@@ -33,13 +38,13 @@ const Header = () => {
     const queryParams = new URLSearchParams(location.search);
     const [searchTerm, setSearchTerm] = useState(queryParams.get('title') || '');
     const [selectedCategory, setSelectedCategory] = useState("title");
-    const [selectedTag, setSelectedTag] = useState("");
+    const [selectedTags, setSelectedTags] = useState([]);
 
     const applyFilter = () => {
         if (selectedCategory !== 'tag' && searchTerm.trim() !== "") {
             navigate(`${href}?${selectedCategory}=${searchTerm}`);
-        } else if (selectedCategory === 'tag' && selectedTag) {
-            navigate(`${href}?tag=${selectedTag}`);
+        } else if (selectedCategory === 'tag' && selectedTags.length > 0) {
+            navigate(`${href}?tag=${selectedTags.join(",")}`);
         } else {
             navigate(href);
         }
@@ -57,10 +62,11 @@ const Header = () => {
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
-        const tag = queryParams.get('tag');
+        const tagString = queryParams.get('tag');
         const title = queryParams.get('title');
 
-        const payload = tag ? { category: 'tag', value: tag } : { category: 'title', value: title };
+        const tagsArray = tagString ? tagString.split(",") : [];
+        const payload = tagsArray.length > 0 ? { category: 'tag', value: tagsArray } : { category: 'title', value: title };
 
         if (href === "/notes") {
             dispatch(fetchNotesByUser(payload));
@@ -78,14 +84,14 @@ const Header = () => {
         setSearchTerm('');
     };
 
-    const handleTagChange = (event) => {
-        setSelectedTag(event.target.value);
-    };
-
     const resetFilter = () => {
         setSearchTerm('');
-        setSelectedTag('');
+        setSelectedTags([])
         navigate(href);
+    };
+
+    const handleTagChange = (event) => {
+        setSelectedTags(event.target.value);
     };
 
     return (
@@ -101,18 +107,31 @@ const Header = () => {
                 </StyledSelect>
                 {
                     selectedCategory === 'tag' && (
-                        <StyledSelect
-                            value={selectedTag}
-                            onChange={handleTagChange}
-                            displayEmpty
-                            renderValue={(value) => t(tags[value] || 'selectTag')}
-                        >
-                            {Object.keys(tags).map(tagValue => (
-                                <MenuItem key={tagValue} value={tagValue}>
-                                    {t(tags[tagValue])}
-                                </MenuItem>
-                            ))}
-                        </StyledSelect>
+                        <StyledFormControl size="small">
+                            <Select
+                                labelId="tag-label"
+                                multiple
+                                value={selectedTags}
+                                onChange={handleTagChange}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        {selected.map((value) => (
+                                            <Chip
+                                                key={value}
+                                                label={t(`${value}`)}
+                                                style={{background: '#C4AE78'}}
+                                            />
+                                        ))}
+                                    </Box>
+                                )}
+                            >
+                                {Object.keys(tags).map((category, index) => (
+                                    <MenuItem key={index} value={category}>
+                                        {t(`${category}`)}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </StyledFormControl>
                     )
                 }
                 {
@@ -135,7 +154,7 @@ const Header = () => {
                     {t('search')}
                 </Button>
                 {
-                    (searchTerm || (selectedCategory === 'tag' && selectedTag)) && (
+                    (searchTerm || (selectedCategory === 'tag' && selectedTags)) && (
                         <IconButton onClick={resetFilter} size="small" sx={{ marginLeft: 1 }}>
                             <CloseIcon />
                         </IconButton>

@@ -60,9 +60,8 @@ async function getNotesByUser(req, res) {
         query.title = new RegExp(title, 'i');
     }
     if (tag) {
-        query.tag = tag;
+        query.tag = { $all: tag.split(",") };
     }
-
 
     try {
         const notes = await Note.find(query);
@@ -81,7 +80,7 @@ async function getPublishedNotes(req, res) {
         query.title = new RegExp(title, 'i');
     }
     if (tag) {
-        query.tag = tag;
+        query.tag = { $all: tag.split(",") };
     }
 
     try {

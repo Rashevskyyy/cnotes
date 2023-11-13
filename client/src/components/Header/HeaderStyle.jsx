@@ -2,7 +2,7 @@ import {alpha, styled} from '@mui/system';
 import InputBase from '@mui/material/InputBase';
 import AppBar from '@mui/material/AppBar';
 import SearchIcon from '@mui/icons-material/Search';
-import {Select} from '@mui/material';
+import {FormControl, Select} from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
 
 export const Search = styled("div")(({ theme }) => ({
@@ -62,6 +62,49 @@ export const StyledSelect = styled(Select)(({ theme }) => ({
         borderStyle: "solid",
         color: theme.palette.primary.main,
         background: theme.palette.primary.cream,
+    },
+}));
+
+export const StyledFormControl = styled(FormControl)(({ theme }) => ({
+    color: "inherit",
+    marginLeft: theme.spacing(1),
+    "& .MuiInputBase-input": {
+        padding: theme.spacing(1, 1, 1, 1),
+        paddingRight: `calc(1em + ${theme.spacing(4)})`,
+        minWidth: '200px',
+        borderRadius: theme.shape.borderRadius,
+        borderColor: theme.palette.primary.black,
+        borderWidth: 1,
+        borderStyle: "solid",
+        color: theme.palette.primary.main,
+        background: theme.palette.primary.cream,
+    },
+     "& .MuiOutlinedInput-root": {
+         "& legend": {
+             width: "unset"
+         },
+         "& fieldset": {
+            borderRadius: theme.shape.borderRadius,
+            borderColor: theme.palette.primary.black,
+            borderWidth: 1,
+            borderStyle: "solid",
+        },
+        "&:hover fieldset": {
+            borderColor: theme.palette.primary.main,
+        },
+        "&.Mui-focused fieldset": {
+            borderColor: theme.palette.primary.main,
+        },
+    },
+    "& .MuiOutlinedInput-input": {
+        padding: theme.spacing(1),
+        paddingRight: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create("width"),
+        background: theme.palette.primary.cream,
+        color: theme.palette.primary.main,
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+        marginTop: 0,
     },
 }));
 
