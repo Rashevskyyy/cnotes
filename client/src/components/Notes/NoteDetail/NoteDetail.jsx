@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
-    Box,
+    Box, Chip,
     Divider,
     FormControl,
     Grid,
@@ -23,17 +23,31 @@ import {
     TagTypography,
     TagIndicator
 } from './NoteDetailStyle';
-import {tagColors} from '../Note/Note';
+import {tags} from '../Note/Note';
 import {useTranslation} from 'react-i18next';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {useMutation} from "react-query";
 import {likeNoteApi} from "../../../api/routes";
+import ReactAvatar from "react-avatar";
 
+function getLikesText(count, lang) {
+    if (lang === 'en') {
+        return count === 1 ? 'like' : 'likes';
+    } else if (lang === 'ua') {
+        if (count === 1) {
+            return 'вподобайка';
+        } else if (count >= 2 && count <= 4) {
+            return 'вподобайки';
+        } else {
+            return 'вподобайок';
+        }
+    }
+}
 
 const NoteDetail = (props) => {
-    const {t} = useTranslation()
+    const {t, i18n} = useTranslation()
     const {selectedNote, handleBack, handleCreateComment, handleUpdateNote} = props;
     const user = useSelector((state) => state.user);
     const [isInputClicked, setIsInputClicked] = useState(false);
@@ -42,17 +56,11 @@ const NoteDetail = (props) => {
     const isAuthor = user && selectedNote ? user?.user?._id === selectedNote?.userId : false
     const isPublished = selectedNote ? selectedNote.isPublished : false
 
-    const getTagColor = (tag) => {
-        return tagColors[tag] || tagColors.Default;
-    };
-
-    const tagColor = getTagColor(selectedNote.tag);
-
-    const {formState: {errors, isDirty}, register, handleSubmit, reset, control} = useForm({
+    const {formState: {errors, isDirty}, setValue, register, handleSubmit, reset, control} = useForm({
         mode: 'onBlur',
         defaultValues: {
             title: selectedNote.title || "",
-            tag: selectedNote.tag || "",
+            tag: selectedNote.tag || [],
             description: selectedNote.description || "",
         },
     });
@@ -66,13 +74,16 @@ const NoteDetail = (props) => {
         reset();
     };
 
-
     const handleInputClick = () => {
         setIsInputClicked(true);
     };
 
     const handleLikeClick = () => {
         handleLikeNote();
+    };
+
+    const handleTagChange = (event) => {
+        setValue("tag", event.target.value);
     };
 
     const { mutate: handleLikeNote } = useMutation(() => likeNoteApi(selectedNote._id), {
@@ -133,13 +144,29 @@ const NoteDetail = (props) => {
                                             <Controller
                                                 name="tag"
                                                 control={control}
-                                                render={({field}) => (
+                                                render={({ field }) => (
                                                     <Select
                                                         {...field}
+                                                        labelId="tag-label"
+                                                        multiple
+                                                        onChange={handleTagChange}
+                                                        renderValue={(selected) => (
+                                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                                                {selected.map((value) => (
+                                                                    <Chip
+                                                                        key={value}
+                                                                        label={t(`${value}`)}
+                                                                        style={{background: '#C4AE78'}}
+                                                                    />
+                                                                ))}
+                                                            </Box>
+                                                        )}
                                                     >
-                                                        <MenuItem value="Management">{t('management')}</MenuItem>
-                                                        <MenuItem value="Development">{'development'}</MenuItem>
-                                                        <MenuItem value="Design">{t('design')}</MenuItem>
+                                                        {Object.keys(tags).map((category, index) => (
+                                                            <MenuItem key={index} value={category}>
+                                                                {t(`${category}`)}
+                                                            </MenuItem>
+                                                        ))}
                                                     </Select>
                                                 )}
                                             />
@@ -191,13 +218,6 @@ const NoteDetail = (props) => {
                                         </TypographyStyled>
                                     </GridStyled>
 
-                                    <Grid item xs={11}>
-                                        <TagTypography variant="body1" tagColor={tagColor}>
-                                            <TagIndicator tagColor={tagColor}/>
-                                          {t(`${selectedNote.tag ? selectedNote.tag.toLowerCase() : ''}`)}
-                                        </TagTypography>
-                                    </Grid>
-
                                     <GridStyled item xs={1}>
                                         <TypographyStyled variant="body1">
                                           {t('description')}
@@ -242,7 +262,7 @@ const NoteDetail = (props) => {
                                                 {isLiked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
                                             </IconButton>
                                             <Typography variant="body2" component="span">
-                                                {likes} {t('like')}
+                                                {`${likes} ${getLikesText(likes, i18n.language)}`}
                                             </Typography>
                                         </Box>
                                     ) : null
@@ -252,7 +272,6 @@ const NoteDetail = (props) => {
                                         <SaveButton
                                             variant="contained"
                                             type="submit"
-                                            disabled={!isDirty}
                                         >
                                             {t('save')}
                                         </SaveButton>
@@ -271,16 +290,26 @@ const NoteDetail = (props) => {
                         <Box elevation={3}>
                             {selectedNote.comments && selectedNote.comments.length > 0 ? (
                                 selectedNote.comments.map((comment, index) => (
-                                    <Box key={index} sx={{marginBottom: 1}}>
-                                        <Typography variant="body1" sx={{marginLeft: '2rem'}}>
-                                            <strong>
-                                                {comment.firstName} {comment.lastName}:
-                                            </strong>{" "}
-                                            {comment.text}
-                                        </Typography>
-                                        <Typography variant="body2" color="textSecondary" sx={{marginLeft: '2rem'}}>
-                                            {comment.date}
-                                        </Typography>
+                                    <Box key={index} sx={{ marginBottom: 2, display: 'flex', alignItems: 'center' }}>
+                                        <ReactAvatar
+                                            name={`${comment.firstName} ${comment.lastName}`}
+                                            size="40"
+                                            round={true}
+                                            style={{ marginRight: 8 }}
+                                        />
+                                        <Box sx={{ flexGrow: 1 }}>
+                                            <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+                                                {comment.firstName} {comment.lastName}
+                                            </Typography>
+                                            <Typography variant="body1">
+                                                {comment.text}
+                                            </Typography>
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 1 }}>
+                                                <Typography variant="body2" color="textSecondary">
+                                                    {comment.date}
+                                                </Typography>
+                                            </Box>
+                                        </Box>
                                     </Box>
                                 ))
                             ) : (

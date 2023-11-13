@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { fetchUserInfo } from "../store/slices/userSlice";
 
 const FullHeightGrid = styled(Grid)(({ theme }) => ({
-  minHeight: "100vh",
+  minHeight: "100%",
 }));
 
 const PrivateRoutes = () => {

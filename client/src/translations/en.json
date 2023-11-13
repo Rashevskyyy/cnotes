@@ -15,10 +15,8 @@
   "createdNote": "Note created",
   "title": "Title",
   "publish": "Publish",
+  "private": "Private",
   "tag": "Tag",
-  "management": "Management",
-  "development": "Development",
-  "design": "Design",
   "errorDefault": "This field is required",
   "maxLength": "Max length is {{count}}",
   "description": "Description",
@@ -26,7 +24,7 @@
   "addedNote": "Add a note",
   "selectTag": "Select a tag",
   "search": "Search",
-  "yourNotes": "Your notes",
+  "yourNotes": "Personal",
   "publishLink": "Publish",
   "noItems": "No items to display",
   "delete": "Delete",
@@ -43,6 +41,14 @@
   "newPassword": "New password",
   "changePassword": "Change password",
   "userRegistered": "User registered",
-  "errorRequest": "Something wrong. Try again"
+  "errorRequest": "Something wrong. Try again",
+  "work": "Work",
+  "personal": "Personal",
+  "education": "Education",
+  "hobbies": "Hobbies",
+  "finance": "Finance",
+  "technology": "Technology",
+  "family": "Family",
+  "travel": "Travel"
 
 }

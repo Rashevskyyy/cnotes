@@ -19,7 +19,9 @@ const commentSchema = new mongoose.Schema({
 });
 
 const noteSchema = new mongoose.Schema({
-    tag: String,
+    tag: [{
+        type: String,
+    }],
     title: String,
     description: String,
     userId: {

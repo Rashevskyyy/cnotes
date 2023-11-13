@@ -39,7 +39,7 @@ const Profile = () => {
     <List>
       <ListItemStyled button onClick={handleProfileClick}>
         <ListItemIcon>
-          <ReactAvatar name={user.user.firstName} size="40" round={true} style={{margin: "16px"}} />
+          <ReactAvatar name={user.user ? user.user.firstName + ' ' + user.user.lastName  : 'А'} size="40" round={true} style={{margin: "16px"}} />
         </ListItemIcon>
         <ListItemText
           primary={

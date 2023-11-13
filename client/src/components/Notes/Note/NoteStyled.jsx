@@ -1,5 +1,5 @@
 import { styled } from '@mui/system';
-import {Card, CardHeader, Typography} from '@mui/material';
+import {Card, CardHeader, Chip, Typography} from '@mui/material';
 
 export const StyledAvatar = styled('div')({
     backgroundColor: 'red',
@@ -12,6 +12,7 @@ export const StyledTypography = styled(({ tagColor, ...props }) => <Typography {
     alignItems: 'center',
     color: tagColor,
     fontWeight: 'bold',
+    borderRadius: "8px"
 }));
 
 export const StyledSpan = styled('span')(({ tagColor }) => ({
@@ -40,4 +41,20 @@ export const DescriptionTypography = styled(Typography)({
 
 export const CardStyled = styled(Card)(({theme}) => ({
     backgroundColor: theme.palette.primary.white,
+    minHeight: '340px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
 }));
+
+export const StyledChip = styled(Chip)(({theme}) => ({
+    margin: '4px',
+    background: theme.palette.primary.beige
+}));
+
+export const TagsContainer = styled('div')({
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '4px',
+    marginTop: '8px',
+});

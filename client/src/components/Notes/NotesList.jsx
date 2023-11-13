@@ -45,7 +45,7 @@ const NotesList = () => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                height="100vh"
+                height="100%"
             >
                 <CircularProgress/>
             </Box>
@@ -77,6 +77,7 @@ const NotesList = () => {
                                 title={note.title}
                                 description={note.description}
                                 firstName={note.firstName}
+                                lastName={note.lastName}
                                 date={note.date}
                                 href={href}
                                 index={index}

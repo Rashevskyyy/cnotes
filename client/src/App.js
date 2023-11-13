@@ -27,6 +27,7 @@ const App = () => {
         <ThemeProvider theme={lightTheme}>
             <Box sx={{
                 height: "100vh",
+                minHeight: '100%',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',

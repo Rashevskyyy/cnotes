@@ -14,11 +14,9 @@
   "createdBy": "Створено Олексієм Рашевським",
   "createdNote": "Нотатку створено",
   "title": "Назва",
-  "publish": "Опублікувати",
+  "publish": "Публічна",
+  "private": "Особиста",
   "tag": "Тег",
-  "management": "Менеджмент",
-  "development": "Розробка",
-  "design": "Дизайн",
   "errorDefault": "Це поле обов'язкове для заповнення",
   "maxLength": "Максимальна довжина символів - {{count}}",
   "description": "Опис",
@@ -26,7 +24,7 @@
   "addedNote": "Додати нотатку",
   "selectTag": "Виберіть тег",
   "search": "Пошук",
-  "yourNotes": "Ваші нотатки",
+  "yourNotes": "Особисті",
   "publishLink": "Публікації",
   "noItems": "Немає елементів для відображення",
   "delete": "Видалити",
@@ -43,5 +41,14 @@
   "newPassword": "Новий пароль",
   "changePassword": "Змінити пароль",
   "userRegistered": "Користувач зареєстрований",
-  "errorRequest": "Щось трапилось. Спробуйте ще раз"
+  "errorRequest": "Щось трапилось. Спробуйте ще раз",
+  "work": "Робота",
+  "personal": "Особисте",
+  "education": "Освіта",
+  "hobbies": "Хобі",
+  "finance": "Фінанси",
+  "technology": "Технологія",
+  "family": "Сім'я",
+  "travel": "Подорожі"
+
 }
